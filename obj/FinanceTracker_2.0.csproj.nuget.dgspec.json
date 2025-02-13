@@ -71,6 +71,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "NuGet.Protocol": {
+              "target": "Package",
+              "version": "[6.13.1, )"
             }
           },
           "imports": [
