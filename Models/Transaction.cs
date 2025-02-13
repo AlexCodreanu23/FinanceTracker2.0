@@ -15,6 +15,6 @@ namespace FinanceTracker_2._0.Models
         public Account Account { get; set; }
 
         public Guid UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; }
     }
 }

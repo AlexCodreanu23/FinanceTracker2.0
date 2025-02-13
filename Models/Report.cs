@@ -11,6 +11,6 @@
         public DateTime createdAt { get; set; } = DateTime.UtcNow;
 
         public Guid UserId { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; }
     }
 }

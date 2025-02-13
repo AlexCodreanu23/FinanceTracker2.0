@@ -12,7 +12,7 @@ namespace FinanceTracker_2._0.Models
         public string currency { get; set; } = "RON";
 
         public Guid UserId { get; set; }
-        public User? User { get; set; }
-        public ICollection<Transaction>? Transactions { get; set; }
+        public User User { get; set; }
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
