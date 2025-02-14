@@ -46,7 +46,7 @@ namespace FinanceTracker_2._0.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker_2._0.Models.Budget", b =>
@@ -83,7 +83,7 @@ namespace FinanceTracker_2._0.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Budgets");
+                    b.ToTable("Budgets", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker_2._0.Models.Category", b =>
@@ -98,7 +98,7 @@ namespace FinanceTracker_2._0.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker_2._0.Models.Report", b =>
@@ -124,7 +124,7 @@ namespace FinanceTracker_2._0.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker_2._0.Models.Transaction", b =>
@@ -156,7 +156,7 @@ namespace FinanceTracker_2._0.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker_2._0.Models.User", b =>

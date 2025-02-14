@@ -21,6 +21,26 @@ namespace FinanceTracker_2._0.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Account>().HasData(
+               new Account
+               {
+                   Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                   name = "Cont Principal",
+                   balance = 1000,
+                   currency = "RON",
+                   UserId = Guid.Parse("22222222-2222-2222-2222-222222222222")
+               }
+           );
+
+            // Poți adăuga seed data și pentru celelalte entități, de exemplu:
+            modelBuilder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    name = "Categorie Exemplu"
+                }
+            );
+
             modelBuilder.Entity<Account>()
                 .Property(a => a.balance)
                 .HasColumnType("decimal(18,2)");
