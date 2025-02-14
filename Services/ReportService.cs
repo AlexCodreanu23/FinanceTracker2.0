@@ -1,0 +1,48 @@
+﻿using AutoMapper;
+using FinanceTracker_2._0.Models.DTOs.ReportDTOs;
+using FinanceTracker_2._0.Repositories;
+using FinanceTracker_2._0.Models;
+
+namespace FinanceTracker_2._0.Services
+{
+    public class ReportService : IReportService
+    {
+        private readonly IMapper _mapper;
+        private readonly IReportRepository _reportRepository;
+    
+        public ReportService (IMapper mapper, IReportRepository reportRepository)
+        {
+            _mapper = mapper;
+            _reportRepository = reportRepository;
+        }
+        public async Task<IEnumerable<ReportDTO>> GetAllReportsAsync()
+        {
+            var reports = await _reportRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<ReportDTO>>(reports);
+        }
+
+        public async Task<ReportDTO> GetReportByIdAsync(Guid id)
+        {
+            var report = await _reportRepository.GetByIdAsync(id);
+            return _mapper.Map<ReportDTO>(report);
+        }
+
+        public async Task CreateReportAsync(CreateReportDTO reportDTO)
+        {
+            var report = _mapper.Map<Report>(reportDTO);
+            await _reportRepository.AddAsync(report);
+        }
+
+        public async Task UpdateReportAsync(UpdateReportDTO reportDTO)
+        {
+            var report = _mapper.Map<Report>(reportDTO);
+            await _reportRepository.UpdateAsync(report);
+        }
+
+        public async Task DeleteReportAsync(Guid id)
+        {
+            await _reportRepository.DeleteAsync(id);
+        }
+    
+    }
+}
