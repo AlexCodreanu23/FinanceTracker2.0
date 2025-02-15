@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Services
         Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync();
         Task<CategoryDTO> GetCategoryByIdAsync(Guid id);
         Task CreateCategoryAsync(CreateCategoryDTO categoryDTO);
-        Task UpdateCategoryAsync(UpdateCategoryDTO categoryDTO);
+        Task UpdateCategoryAsync(Guid id,UpdateCategoryDTO categoryDTO);
         Task DeleteCategoryAsync(Guid id);
 
     }

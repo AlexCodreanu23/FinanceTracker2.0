@@ -2,6 +2,7 @@
 using FinanceTracker_2._0.Models.DTOs.CategoryDTOs;
 using FinanceTracker_2._0.Repositories;
 using FinanceTracker_2._0.Models;
+using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 
 namespace FinanceTracker_2._0.Services
 {
@@ -34,10 +35,15 @@ namespace FinanceTracker_2._0.Services
             await _categoryRepository.AddAsync(category);
         }
 
-        public async Task UpdateCategoryAsync(UpdateCategoryDTO categoryDTO)
+        public async Task UpdateCategoryAsync(Guid id, UpdateCategoryDTO categoryDTO)
         {
-            var category = _mapper.Map<Category>(categoryDTO);
-            await _categoryRepository.UpdateAsync(category);
+            var existingCategory = await _categoryRepository.GetByIdAsync(id);
+            if (existingCategory == null)
+            {
+                throw new Exception("Category not found.");
+            }
+            _mapper.Map(categoryDTO, existingCategory);
+            await _categoryRepository.UpdateAsync(existingCategory);
         }
 
         public async Task DeleteCategoryAsync(Guid id)

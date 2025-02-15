@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Services
         Task<IEnumerable<ReportDTO>> GetAllReportsAsync();
         Task<ReportDTO> GetReportByIdAsync(Guid id);
         Task CreateReportAsync(CreateReportDTO reportDTO);
-        Task UpdateReportAsync(UpdateReportDTO reportDTO);
+        Task UpdateReportAsync(Guid id, UpdateReportDTO reportDTO);
         Task DeleteReportAsync(Guid id);
     }
 }

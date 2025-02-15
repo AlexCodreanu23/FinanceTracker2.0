@@ -1491,15 +1491,10 @@
       },
       "UpdateAccountDTO": {
         "required": [
-          "id",
           "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "minLength": 1,
             "type": "string"
@@ -1521,16 +1516,11 @@
           "budgetName",
           "categoryId",
           "endDate",
-          "id",
           "startDate",
           "userId"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "budgetName": {
             "minLength": 1,
             "type": "string"
@@ -1560,15 +1550,10 @@
       },
       "UpdateCategoryDTO": {
         "required": [
-          "id",
           "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "minLength": 1,
             "type": "string"
@@ -1579,16 +1564,11 @@
       "UpdateReportDTO": {
         "required": [
           "amountSpent",
-          "id",
           "monthYear",
           "userId"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "amountSpent": {
             "type": "number",
             "format": "double"
@@ -1609,15 +1589,10 @@
           "accountId",
           "amount",
           "categoryId",
-          "id",
           "userId"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "amount": {
             "type": "number",
             "format": "double"
@@ -1645,15 +1620,10 @@
         "required": [
           "email",
           "firstName",
-          "id",
           "lastName"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "firstName": {
             "minLength": 1,
             "type": "string"

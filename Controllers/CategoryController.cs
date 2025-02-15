@@ -44,11 +44,7 @@ namespace FinanceTracker_2._0.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<CategoryDTO>>UpdateCategory(UpdateCategoryDTO categoryDTO, Guid id)
         {
-            if (id != categoryDTO.Id)
-            {
-                return BadRequest("Id mismatch");
-            }
-            await _categoryService.UpdateCategoryAsync(categoryDTO);
+            await _categoryService.UpdateCategoryAsync(id, categoryDTO);
             return NoContent();
         }
 

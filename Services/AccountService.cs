@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Models.DTOs.AccountDTOs;
+using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 using FinanceTracker_2._0.Repositories;
 
 namespace FinanceTracker_2._0.Services
@@ -34,10 +35,15 @@ namespace FinanceTracker_2._0.Services
             await _accountRepository.AddAsync(account);
         }
 
-        public async Task UpdateAccountAsync(UpdateAccountDTO accountDto)
+        public async Task UpdateAccountAsync(Guid id, UpdateAccountDTO accountDTO)
         {
-            var account = _mapper.Map<Account>(accountDto);
-            await _accountRepository.UpdateAsync(account);
+            var existingAccount = await _accountRepository.GetByIdAsync(id);
+            if (existingAccount == null)
+            {
+                throw new Exception("Account not found.");
+            }
+            _mapper.Map(accountDTO, existingAccount);
+            await _accountRepository.UpdateAsync(existingAccount);
         }
 
         public async Task DeleteAccountAsync(Guid id)

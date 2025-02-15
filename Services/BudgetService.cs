@@ -34,10 +34,15 @@ namespace FinanceTracker_2._0.Services
             await _budgetRepository.AddAsync(budget);
         }
 
-        public async Task UpdateBudgetAsync(UpdateBudgetDTO budgetDTO)
+        public async Task UpdateBudgetAsync(Guid id, UpdateBudgetDTO budgetDTO)
         {
-            var budget = _mapper.Map<Budget>(budgetDTO);
-            await _budgetRepository.UpdateAsync(budget);
+            var existingBudget = await _budgetRepository.GetByIdAsync(id);
+            if (existingBudget == null)
+            {
+                throw new Exception("Budget not found.");
+            }
+            _mapper.Map(budgetDTO, existingBudget);
+            await _budgetRepository.UpdateAsync(existingBudget);
         }
 
         public async Task DeleteBudgetAsync(Guid id)

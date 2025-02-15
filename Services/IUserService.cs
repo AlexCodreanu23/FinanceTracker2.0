@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Services
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task<UserDTO> GetUserByIdAsync(Guid id);
         Task CreateUserAsync(CreateUserDTO userDTO);
-        Task UpdateUserAsync(UpdateUserDTO userDTO);
+        Task UpdateUserAsync(Guid id, UpdateUserDTO userDTO);
         Task DeleteUserAsync(Guid id);
     }
 }

@@ -43,12 +43,7 @@ namespace FinanceTracker_2._0.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAccount(Guid id, UpdateAccountDTO updateAccountDTO)
         {
-            if (id != updateAccountDTO.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
-            await _accountService.UpdateAccountAsync(updateAccountDTO);
+            await _accountService.UpdateAccountAsync(id, updateAccountDTO);
             return NoContent();
         }
 

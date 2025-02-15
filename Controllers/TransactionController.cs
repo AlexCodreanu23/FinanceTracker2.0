@@ -39,11 +39,7 @@ namespace FinanceTracker_2._0.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<TransactionDTO>>UpdateTransaction(UpdateTransactionDTO transactionDTO, Guid id)
         {
-            if (id != transactionDTO.Id)
-            {
-                return BadRequest("Id mismatch");
-            }
-            await _transactionService.UpdateTransactionAsync(transactionDTO);
+            await _transactionService.UpdateTransactionAsync(id, transactionDTO);
             return NoContent();
         }
 

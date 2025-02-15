@@ -2,6 +2,7 @@
 using FinanceTracker_2._0.Models.DTOs.UserDTOs;
 using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Repositories;
+using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 
 namespace FinanceTracker_2._0.Services
 {
@@ -34,10 +35,15 @@ namespace FinanceTracker_2._0.Services
             await _userRepository.AddAsync(user);
         }
 
-        public async Task UpdateUserAsync(UpdateUserDTO userDto)
+        public async Task UpdateUserAsync(Guid id, UpdateUserDTO userDTO)
         {
-            var user = _mapper.Map<User>(userDto);
-            await _userRepository.UpdateAsync(user);
+            var existingUser = await _userRepository.GetByIdAsync(id);
+            if (existingUser == null)
+            {
+                throw new Exception("User not found.");
+            }
+            _mapper.Map(userDTO, existingUser);
+            await _userRepository.UpdateAsync(existingUser);
         }
 
         public async Task DeleteUserAsync(Guid id)

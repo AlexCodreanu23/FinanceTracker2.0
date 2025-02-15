@@ -2,6 +2,7 @@
 using FinanceTracker_2._0.Models.DTOs.ReportDTOs;
 using FinanceTracker_2._0.Repositories;
 using FinanceTracker_2._0.Models;
+using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 
 namespace FinanceTracker_2._0.Services
 {
@@ -33,10 +34,15 @@ namespace FinanceTracker_2._0.Services
             await _reportRepository.AddAsync(report);
         }
 
-        public async Task UpdateReportAsync(UpdateReportDTO reportDTO)
+        public async Task UpdateReportAsync(Guid id,UpdateReportDTO reportDTO)
         {
-            var report = _mapper.Map<Report>(reportDTO);
-            await _reportRepository.UpdateAsync(report);
+            var existingReport = await _reportRepository.GetByIdAsync(id);
+            if (existingReport == null)
+            {
+                throw new Exception("Report not found.");
+            }
+            _mapper.Map(reportDTO, existingReport);
+            await _reportRepository.UpdateAsync(existingReport);
         }
 
         public async Task DeleteReportAsync(Guid id)

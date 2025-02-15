@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Services
         Task<IEnumerable<TransactionDTO>> GetAllTransactionsAsync();
         Task<TransactionDTO> GetTransactionByIdAsync(Guid id);
         Task CreateTransactionAsync(CreateTransactionDTO transactionDTO);
-        Task UpdateTransactionAsync(UpdateTransactionDTO transactionDTO);
+        Task UpdateTransactionAsync(Guid id ,UpdateTransactionDTO transactionDTO);
         Task DeleteTransactionAsync(Guid id);
     }
 }

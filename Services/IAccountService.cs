@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Services
         Task<IEnumerable<AccountDTO>>GetAllAccountsAsync();
         Task<AccountDTO> GetAccountByIdAsync(Guid id);
         Task CreateAccountAsync(CreateAccountDTO accountDTO);
-        Task UpdateAccountAsync(UpdateAccountDTO accountDTO);
+        Task UpdateAccountAsync(Guid id, UpdateAccountDTO accountDTO);
         Task DeleteAccountAsync(Guid id);
     }
 }
