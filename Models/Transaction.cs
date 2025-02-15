@@ -2,7 +2,7 @@
 
 namespace FinanceTracker_2._0.Models
 {
-    public class Transaction
+    public class Transaction : IEntity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

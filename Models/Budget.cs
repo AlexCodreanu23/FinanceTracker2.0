@@ -1,6 +1,6 @@
 ﻿namespace FinanceTracker_2._0.Models
 {
-    public class Budget
+    public class Budget : IEntity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

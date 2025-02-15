@@ -21,18 +21,44 @@ namespace FinanceTracker_2._0.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Account>().HasData(
-               new Account
-               {
-                   Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-                   name = "Cont Principal",
-                   balance = 1000,
-                   currency = "RON",
-                   UserId = Guid.Parse("22222222-2222-2222-2222-222222222222")
-               }
-           );
+            modelBuilder.Entity<User>()
+            .Property(u => u.createdAt)
+            .HasDefaultValueSql("GETUTCDATE()");
 
-            // Poți adăuga seed data și pentru celelalte entități, de exemplu:
+            var seedUserId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+            const string staticSecurityStamp = "C1A3E9E3-1234-5678-90AB-CDEF12345678";
+            const string staticConcurrencyStamp = "STATIC_CONCURRENCY_STAMP_VALUE";
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = seedUserId,
+                    UserName = "testuser",
+                    firstName = "John",
+                    lastName = "Boss",
+                    NormalizedUserName = "TESTUSER",
+                    Email = "testuser@example.com",
+                    NormalizedEmail = "TESTUSER@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = "AQAAAAEAACcQAAAAEJjgS/sdDU3F4vdkFtm5/+TMWq3v+8X5Fh+6D6SKNwj5uF2Qzy/mZoUo8s3/5Nd0FA==", // înlocuiește cu hash-ul generat
+                    SecurityStamp = staticSecurityStamp,
+                    ConcurrencyStamp = staticConcurrencyStamp
+                }
+            );
+
+            // Seed pentru Account, folosind UserId-ul din seed-ul de User
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    name = "Cont Principal",
+                    balance = 1000,
+                    currency = "RON",
+                    UserId = seedUserId
+                }
+            );
+
+            // Seed pentru Category (opțional)
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
@@ -41,6 +67,7 @@ namespace FinanceTracker_2._0.Data
                 }
             );
 
+            // Configurări suplimentare
             modelBuilder.Entity<Account>()
                 .Property(a => a.balance)
                 .HasColumnType("decimal(18,2)");
@@ -57,62 +84,48 @@ namespace FinanceTracker_2._0.Data
                 .Property(t => t.amount)
                 .HasColumnType("decimal(18,2)");
 
-            // Account ↔ User (One-to-Many)
+            // Configurarea relațiilor:
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.User)
                 .WithMany(u => u.Accounts)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            // Transaction ↔ Account (One-to-Many)
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Account)
                 .WithMany(a => a.Transactions)
                 .HasForeignKey(t => t.AccountId)
                 .OnDelete(DeleteBehavior.NoAction);
-            // Change to NoAction to avoid cascading delete conflict
 
-            // Transaction ↔ Category (One-to-Many)
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Category)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CategoryId)
                 .OnDelete(DeleteBehavior.NoAction);
-            // Change to NoAction to avoid cascading delete conflict
 
-            // Transaction ↔ User (One-to-Many)
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.User)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            // Budget ↔ Category (One-to-Many
             modelBuilder.Entity<Budget>()
                 .HasOne(b => b.Category)
                 .WithMany(c => c.Budgets)
                 .HasForeignKey(b => b.CategoryId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            // Budget ↔ User (One-to-Many)
             modelBuilder.Entity<Budget>()
                 .HasOne(b => b.User)
                 .WithMany(u => u.Budgets)
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            // Report ↔ User (One-to-Many)
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reports)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-
         }
-
     }
 }

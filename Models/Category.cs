@@ -2,7 +2,7 @@
 
 namespace FinanceTracker_2._0.Models
 {
-    public class Category
+    public class Category : IEntity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

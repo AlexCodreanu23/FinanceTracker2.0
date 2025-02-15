@@ -1,10 +1,11 @@
 ﻿using FinanceTracker_2._0.Data;
+using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker_2._0.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -33,7 +34,13 @@ namespace FinanceTracker_2._0.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            _dbSet.Update(entity);
+            var existingEntity = await _dbSet.FindAsync(entity.Id);
+            if (existingEntity == null)
+            {
+                throw new Exception("Entitatea nu există în baza de date.");
+            }
+
+            _context.Entry(existingEntity).CurrentValues.SetValues(entity);
             await _context.SaveChangesAsync();
         }
 

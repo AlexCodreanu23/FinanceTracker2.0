@@ -1,6 +1,6 @@
 ﻿namespace FinanceTracker_2._0.Models
 {
-    public class Report
+    public class Report : IEntity
     {
         public Guid Id { get; set; }
 
