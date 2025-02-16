@@ -9,9 +9,9 @@ namespace FinanceTracker_2._0.Models.DTOs.BudgetDTOs
         [Required]
         public decimal Amount { get; set; }
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime start_date { get; set; }
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTime end_date { get; set; }
         [Required]
         public Guid CategoryId { get; set; }
         [Required]

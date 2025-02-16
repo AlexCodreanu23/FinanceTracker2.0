@@ -50,5 +50,12 @@ namespace FinanceTracker_2._0.Services
             await _budgetRepository.DeleteAsync(id);
         }
 
+        public async Task<IEnumerable<BudgetDTO>> GetBudgetsForUserAsync(Guid id)
+        {
+            var budgets = await _budgetRepository.GetAllAsync();
+            var filtered = budgets.Where(b => b.UserId == id);
+            return _mapper.Map<IEnumerable<BudgetDTO>>(filtered);
+        }
+
     }
 }

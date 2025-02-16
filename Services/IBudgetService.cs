@@ -9,5 +9,6 @@ namespace FinanceTracker_2._0.Services
         Task CreateBudgetAsync(CreateBudgetDTO budgetDTO);
         Task UpdateBudgetAsync(Guid id, UpdateBudgetDTO budgetDTO);
         Task DeleteBudgetAsync(Guid id);
+        Task<IEnumerable<BudgetDTO>> GetBudgetsForUserAsync(Guid id);
     }
 }

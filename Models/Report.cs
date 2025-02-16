@@ -8,7 +8,7 @@
 
         public string month_year {  get; set; } 
         
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        public DateTime createdAt { get; set; }
 
         public Guid UserId { get; set; }
         public virtual User User { get; set; }

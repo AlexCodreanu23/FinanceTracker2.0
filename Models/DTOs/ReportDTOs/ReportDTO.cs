@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public decimal AmountSpent { get; set; }
-        public string MonthYear { get; set; }
+        public string month_year { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid UserId { get; set; }
     }

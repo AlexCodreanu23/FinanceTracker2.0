@@ -2,7 +2,6 @@
 using FinanceTracker_2._0.Models.DTOs.TransactionDTOs;
 using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Repositories;
-using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 
 namespace FinanceTracker_2._0.Services
 {
@@ -48,6 +47,13 @@ namespace FinanceTracker_2._0.Services
         public async Task DeleteTransactionAsync(Guid id)
         {
             await _transactionRepository.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<TransactionDTO>> GetTransactionsForUserAsync(Guid id)
+        {
+            var transactions = await _transactionRepository.GetAllAsync();
+            var filtered = transactions.Where(t => t.UserId == id);
+            return _mapper.Map<IEnumerable<TransactionDTO>>(filtered);
         }
     }
 }

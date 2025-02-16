@@ -1194,6 +1194,202 @@
           }
         }
       }
+    },
+    "/api/User/{id}/transactions": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/accounts": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/reports": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/{id}/budgets": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BudgetDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BudgetDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BudgetDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1235,11 +1431,11 @@
             "type": "number",
             "format": "double"
           },
-          "startDate": {
+          "start_date": {
             "type": "string",
             "format": "date-time"
           },
-          "endDate": {
+          "end_date": {
             "type": "string",
             "format": "date-time"
           },
@@ -1303,8 +1499,8 @@
           "amount",
           "budgetName",
           "categoryId",
-          "endDate",
-          "startDate",
+          "end_date",
+          "start_date",
           "userId"
         ],
         "type": "object",
@@ -1317,11 +1513,11 @@
             "type": "number",
             "format": "double"
           },
-          "startDate": {
+          "start_date": {
             "type": "string",
             "format": "date-time"
           },
-          "endDate": {
+          "end_date": {
             "type": "string",
             "format": "date-time"
           },
@@ -1352,7 +1548,7 @@
       "CreateReportDTO": {
         "required": [
           "amountSpent",
-          "monthYear",
+          "month_year",
           "userId"
         ],
         "type": "object",
@@ -1361,7 +1557,7 @@
             "type": "number",
             "format": "double"
           },
-          "monthYear": {
+          "month_year": {
             "minLength": 1,
             "type": "string"
           },
@@ -1444,7 +1640,7 @@
             "type": "number",
             "format": "double"
           },
-          "monthYear": {
+          "month_year": {
             "type": "string",
             "nullable": true
           },
@@ -1515,8 +1711,8 @@
           "amount",
           "budgetName",
           "categoryId",
-          "endDate",
-          "startDate",
+          "end_date",
+          "start_date",
           "userId"
         ],
         "type": "object",
@@ -1529,11 +1725,11 @@
             "type": "number",
             "format": "double"
           },
-          "startDate": {
+          "start_date": {
             "type": "string",
             "format": "date-time"
           },
-          "endDate": {
+          "end_date": {
             "type": "string",
             "format": "date-time"
           },
@@ -1564,7 +1760,7 @@
       "UpdateReportDTO": {
         "required": [
           "amountSpent",
-          "monthYear",
+          "month_year",
           "userId"
         ],
         "type": "object",
@@ -1573,7 +1769,7 @@
             "type": "number",
             "format": "double"
           },
-          "monthYear": {
+          "month_year": {
             "minLength": 1,
             "type": "string"
           },

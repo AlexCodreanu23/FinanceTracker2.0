@@ -49,6 +49,13 @@ namespace FinanceTracker_2._0.Services
         {
             await _reportRepository.DeleteAsync(id);
         }
-    
+
+        public async Task<IEnumerable<ReportDTO>>GetReportsForUserAsync(Guid id)
+        {
+            var reports = await _reportRepository.GetAllAsync();
+            var filtered = reports.Where(r => r.UserId == id);
+            return _mapper.Map<IEnumerable<ReportDTO>>(filtered);
+        }
+
     }
 }

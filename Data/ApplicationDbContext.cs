@@ -25,6 +25,18 @@ namespace FinanceTracker_2._0.Data
             .Property(u => u.createdAt)
             .HasDefaultValueSql("GETUTCDATE()");
 
+            modelBuilder.Entity<Report>()
+            .Property(r => r.createdAt)
+            .HasDefaultValueSql("GETUTCDATE()");
+
+            modelBuilder.Entity<Budget>()
+            .Property(b => b.createdAt)
+            .HasDefaultValueSql("GETUTCDATE()");
+
+            modelBuilder.Entity<Transaction>()
+            .Property(b => b.date)
+            .HasDefaultValueSql("GETUTCDATE()");
+
             var seedUserId = Guid.Parse("22222222-2222-2222-2222-222222222222");
             const string staticSecurityStamp = "C1A3E9E3-1234-5678-90AB-CDEF12345678";
             const string staticConcurrencyStamp = "STATIC_CONCURRENCY_STAMP_VALUE";

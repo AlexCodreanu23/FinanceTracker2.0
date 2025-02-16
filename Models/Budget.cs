@@ -11,7 +11,7 @@
 
         public DateTime end_date { get; set; }
 
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        public DateTime createdAt { get; set; }
 
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }

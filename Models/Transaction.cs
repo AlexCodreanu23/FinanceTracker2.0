@@ -8,7 +8,7 @@ namespace FinanceTracker_2._0.Models
 
         [Required]
         public decimal amount { get; set; }
-        public DateTime date { get; set; } = DateTime.UtcNow;
+        public DateTime date { get; set; }
         public Guid AccountId { get; set; }
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }

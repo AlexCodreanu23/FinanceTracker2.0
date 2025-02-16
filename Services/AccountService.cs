@@ -50,5 +50,12 @@ namespace FinanceTracker_2._0.Services
         {
             await _accountRepository.DeleteAsync(id);
         }
+
+        public async Task<IEnumerable<AccountDTO>> GetAccountsForUserAsync(Guid id)
+        {
+            var accounts = await _accountRepository.GetAllAsync();
+            var filtered = accounts.Where(a => a.UserId == id);
+            return _mapper.Map<IEnumerable<AccountDTO>>(filtered);
+        }
     }
 }

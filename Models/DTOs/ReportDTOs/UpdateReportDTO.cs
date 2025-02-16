@@ -7,7 +7,7 @@ namespace FinanceTracker_2._0.Models.DTOs.ReportDTOs
         [Required]
         public decimal AmountSpent { get; set; }
         [Required]
-        public string MonthYear { get; set; }
+        public string month_year { get; set; }
         [Required]
         public Guid UserId { get; set; }
     }
