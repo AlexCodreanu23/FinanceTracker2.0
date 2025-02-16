@@ -55,5 +55,12 @@ namespace FinanceTracker_2._0.Services
             var filtered = transactions.Where(t => t.UserId == id);
             return _mapper.Map<IEnumerable<TransactionDTO>>(filtered);
         }
+
+        public async Task<IEnumerable<TransactionDTO>> GetTransactionsForAccountAsync(Guid id)
+        {
+            var transactions = await _transactionRepository.GetAllAsync();
+            var filtered = transactions.Where(t => t.AccountId == id);
+            return _mapper.Map<IEnumerable<TransactionDTO>>(filtered);
+        }
     }
 }

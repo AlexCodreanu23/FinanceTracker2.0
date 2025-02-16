@@ -1,6 +1,7 @@
 ﻿using FinanceTracker_2._0.Services;
 using Microsoft.AspNetCore.Mvc;
 using FinanceTracker_2._0.Models.DTOs.AccountDTOs;
+using FinanceTracker_2._0.Models.DTOs.TransactionDTOs;  
 
 namespace FinanceTracker_2._0.Controllers
 {
@@ -9,10 +10,12 @@ namespace FinanceTracker_2._0.Controllers
     public class AccountController :ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ITransactionService transactionService)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
         }
 
         [HttpGet]
@@ -54,5 +57,15 @@ namespace FinanceTracker_2._0.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}/transactions")]
+        public async Task<ActionResult<IEnumerable<TransactionDTO>>> GetAccountTransactions(Guid id)
+        {
+            var transactions = await _transactionService.GetAllTransactionsAsync();
+            if (transactions == null || !transactions.Any())
+            {
+                return NotFound("No transactions found for this account.");
+            }
+            return Ok(transactions);
+        }
     }
 }

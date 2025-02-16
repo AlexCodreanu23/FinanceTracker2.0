@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Models.DTOs.AccountDTOs;
-using FinanceTracker_2._0.Models.DTOs.BudgetDTOs;
 using FinanceTracker_2._0.Repositories;
 
 namespace FinanceTracker_2._0.Services
