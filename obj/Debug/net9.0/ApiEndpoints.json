@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_1",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_3",
     "RelativePath": "",
     "HttpMethod": "GET",
     "IsController": false,
@@ -149,6 +149,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "FinanceTracker_2._0.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "FinanceTracker_2._0.Models.DTOs.UserDTOs.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FinanceTracker_2._0.Controllers.BudgetController",
@@ -377,6 +393,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinanceTracker_2._0.Controllers.DebugController",
+    "Method": "GetHash",
+    "RelativePath": "api/Debug/hash/{password}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "FinanceTracker_2._0.Controllers.ReportController",

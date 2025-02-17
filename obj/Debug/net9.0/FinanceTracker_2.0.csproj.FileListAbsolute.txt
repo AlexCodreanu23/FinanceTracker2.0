@@ -165,4 +165,5 @@ C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\bin\Debug\net9
 C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\obj\Debug\net9.0\FinanceTracker_2.0.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\alex2\source\repos\FinanceTracker_2.0\FinanceTracker_2.0\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

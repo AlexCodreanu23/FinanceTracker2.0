@@ -4,6 +4,7 @@ using FinanceTracker_2._0.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceTracker_2._0.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217190301_UpdatedSeedData3.cs")]
+    partial class UpdatedSeedData3cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,25 +282,6 @@ namespace FinanceTracker_2._0.Migrations
                             createdAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             firstName = "John",
                             lastName = "Boss"
-                        },
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "CONCURRENCY-SECONDUSER-STATIC",
-                            Email = "seconduser@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SECONDUSER@EXAMPLE.COM",
-                            NormalizedUserName = "SECONDUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFG9EGclYxL6nymYOIfwioOhO4NUf8mO3Vt0u6/533pjK4TaGi3d4BhY6CLK/kKjwQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "B1B2B3B4-B5B6-B7B8-B9B0-CCCCCCCCCCCC",
-                            TwoFactorEnabled = false,
-                            UserName = "seconduser",
-                            createdAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            firstName = "Jane",
-                            lastName = "Doe"
                         });
                 });
 
