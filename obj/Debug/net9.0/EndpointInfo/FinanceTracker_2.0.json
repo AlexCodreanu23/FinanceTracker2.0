@@ -657,45 +657,6 @@
         }
       }
     },
-    "/api/Debug/hash/{password}": {
-      "get": {
-        "tags": [
-          "Debug"
-        ],
-        "parameters": [
-          {
-            "name": "password",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/": {
       "get": {
         "tags": [
