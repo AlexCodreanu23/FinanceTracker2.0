@@ -17,7 +17,8 @@ namespace FinanceTracker_2._0.MappingProfiles
             CreateMap<CreateAccountDTO, Account>();
             CreateMap<UpdateAccountDTO, Account>();
 
-            CreateMap<Budget, BudgetDTO>();
+            CreateMap<Budget, BudgetDTO>()
+                .ForMember(dest => dest.BudgetName, opt => opt.MapFrom(src => src.budgetName));
             CreateMap<CreateBudgetDTO, Budget>();
             CreateMap<UpdateBudgetDTO, Budget>();
 
@@ -36,6 +37,7 @@ namespace FinanceTracker_2._0.MappingProfiles
             CreateMap<User, UserDTO>();
             CreateMap<CreateUserDTO, User>();
             CreateMap<UpdateUserDTO, User>();
+
         }
     }
 }

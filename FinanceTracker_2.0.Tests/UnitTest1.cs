@@ -56,5 +56,23 @@ namespace FinanceTracker_2._0.Tests
                 Assert.False(string.IsNullOrEmpty(accountDto.Currency));
             }
         }
+
+        [Fact]
+        public async Task GetAccountsForUserAsync_FiltersAccountsByUserId()
+        {
+            var userId = Guid.NewGuid();
+            var accounts = new List<Account>
+            {
+                new Account { Id = Guid.NewGuid(), name = "Account1", balance = 100, currency = "USD", UserId = userId },
+                new Account { Id = Guid.NewGuid(), name = "Account2", balance = 200, currency = "USD", UserId = Guid.NewGuid() }
+            };
+            _accountRepositoryMock.Setup(repo => repo.GetAllAsync())
+                                  .ReturnsAsync(accounts);
+
+            var result = await _accountService.GetAccountsForUserAsync(userId);
+
+            Assert.Single(result);
+            Assert.Equal("Account1", result.First().Name);
+        }
     }
 }
