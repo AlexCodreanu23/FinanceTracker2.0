@@ -1,4 +1,4 @@
-using FinanceTracker_2._0.Configurations;
+﻿using FinanceTracker_2._0.Configurations;
 using FinanceTracker_2._0.Data;
 using FinanceTracker_2._0.Models;
 using FinanceTracker_2._0.Repositories;
@@ -39,6 +39,17 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FT2Connection")));
 
@@ -70,6 +81,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("AllowReactApp");
+
 
 if (app.Environment.IsDevelopment())
 {
