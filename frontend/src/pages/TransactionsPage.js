@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchTransactions } from "../services/api";
+import { fetchTransactions, deleteTransaction} from "../services/api";
 
 const TransactionsPage = () => {
     const [transactions, setTransactions] = useState([]);
@@ -12,6 +12,15 @@ const TransactionsPage = () => {
         })
         .catch((err) => console.error(err));
     }, []);
+
+    const handleDelete = async(id) => {
+      try{
+        await deleteTransaction(id);
+        setTransactions(transactions.filter((transaction) => transaction.id !== id));
+      }catch(error){
+        console.error("A aparut o eroare: ", error);
+      }
+    }
   
     return (
       <div>
@@ -23,6 +32,7 @@ const TransactionsPage = () => {
             {transactions.map((tx) => (
               <li key={tx.id}>
                 {tx.amount} - {tx.accountId} - {tx.categoryId} - {tx.userId} - {tx.date}
+                <button onClick={() => handleDelete(tx.id)}>Delete Transaction</button>
               </li>
             ))}
           </ul>

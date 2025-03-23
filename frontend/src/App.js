@@ -7,8 +7,8 @@ import AccountsPage from "./pages/AccountsPage";
 import ReportsPage from "./pages/ReportsPage";
 import CreateTransactionPage from "./pages/CreateTransactionPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
-import './App.css';
 import CreateBudgetPage from "./pages/CreateBudgetPage";
+import './App.css';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAccounts } from "../services/api";
+import { fetchAccounts, deleteAccount } from "../services/api";
 
 const AccountsPage = () => {
     const [accounts, setAccounts] = useState([]);
@@ -11,6 +11,15 @@ const AccountsPage = () => {
         }).catch((err) => console.error(err));
     },[]);
 
+    const handleDelete = async(id) => {
+        try{
+            await deleteAccount(id);
+            setAccounts(accounts.filter((account) => account.id !== id));
+        }catch(error){
+            console.error("A aparut o eroare:", error);
+        }
+    }
+
     return(
         <div>
             <h1>Accounts</h1>
@@ -19,7 +28,9 @@ const AccountsPage = () => {
             ) : (
                 <ul>
                     {accounts.map((tx)=> (
-                        <li key = {tx.id}> {tx.name} - {tx.balance} - {tx.currency}</li>
+                        <li key = {tx.id}> {tx.name} - {tx.balance} - {tx.currency}
+                        <button onClick = {() => handleDelete(tx.id)}> Delete Account</button>
+                        </li>
                     ))};
                 </ul>
             )}

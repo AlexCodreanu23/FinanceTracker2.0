@@ -94,3 +94,33 @@ export const createBudget = async(budgetData) => {
     throw err;
   }
 }
+
+export const deleteAccount = async(accountId) => {
+  try{
+    const response = await axios.delete(`${API_BASE_URL}/Account/${accountId}`);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare: ", err);
+    throw err;
+  }
+}
+
+export const deleteBudget = async(budgetId) => {
+  try{
+    const response = await axios.delete(`${API_BASE_URL}/Budget/${budgetId}`);
+    return response.data;
+  }catch(error){
+    console.error("A aparut o eroare: ", error);
+    throw error;
+  }
+}
+
+export const deleteTransaction = async(transactionId) => {
+  try{
+    const response = await axios.delete(`${API_BASE_URL}/Transaction/${transactionId}`);
+    return response.data;
+  }catch(error){
+    console.error("A aparut o eroare: ", error);
+    throw error;
+  }
+}
