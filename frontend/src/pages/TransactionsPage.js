@@ -22,7 +22,7 @@ const TransactionsPage = () => {
           <ul>
             {transactions.map((tx) => (
               <li key={tx.id}>
-                {tx.amount} - {tx.accountId} - {tx.categoryId} - {tx.userId}
+                {tx.amount} - {tx.accountId} - {tx.categoryId} - {tx.userId} - {tx.date}
               </li>
             ))}
           </ul>

@@ -5,8 +5,7 @@ const UsersPage = () => {
     const[users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetchUsers().
-        then((data) => {
+        fetchUsers().then((data) => {
             console.log("Useri: ", data);
             setUsers(data);
         }) 

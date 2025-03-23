@@ -5,7 +5,10 @@ import BudgetsPage from "./pages/BudgetsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AccountsPage from "./pages/AccountsPage";
 import ReportsPage from "./pages/ReportsPage";
+import CreateTransactionPage from "./pages/CreateTransactionPage";
+import CreateAccountPage from "./pages/CreateAccountPage";
 import './App.css';
+import CreateBudgetPage from "./pages/CreateBudgetPage";
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
       <CategoriesPage />
       <AccountsPage/>
       <ReportsPage/>
+      <CreateTransactionPage/>
+      <CreateAccountPage/>
+      <CreateBudgetPage/>
     </div>
   );
 }

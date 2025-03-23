@@ -42,7 +42,7 @@ export const fetchCategories = async () => {
     console.error("A aparut o eroare: ", error);
     throw error;
   }
-}
+};
 
 export const fetchAccounts = async () => {
   try{
@@ -53,11 +53,41 @@ export const fetchAccounts = async () => {
     console.error("A aparut o eroare:", error);
     throw error;
   }
-}
+};
 
 export const fetchReports = async () => {
   try{
     const response = await axios.get(`${API_BASE_URL}/Report`);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare: ", err);
+    throw err;
+  }
+};
+
+export const createTransaction = async(transactionData) => {
+  try{
+    const response = await axios.post(`${API_BASE_URL}/Transaction`, transactionData);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare: ", err);
+    throw err;
+  }
+};
+
+export const createAccount = async(accountData) => {
+  try{
+    const response = await axios.post(`${API_BASE_URL}/Account`, accountData);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare: ", err);
+    throw err;
+  }
+}
+
+export const createBudget = async(budgetData) => {
+  try{
+    const response = await axios.post(`${API_BASE_URL}/Budget`, budgetData);
     return response.data;
   }catch(err){
     console.error("A aparut o eroare: ", err);
