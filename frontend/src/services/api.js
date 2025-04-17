@@ -124,3 +124,35 @@ export const deleteTransaction = async(transactionId) => {
     throw error;
   }
 }
+
+export const loginUser = async(email, password) => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password }) 
+  });
+
+  if(!response.ok){
+      throw new Error("Login failed");
+  }
+  const data = await response.json();
+  return data;
+}
+
+export const registerUser = async(email, password, firstName, lastName) => {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    method:"POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({email,password,firstName,lastName})
+  });
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err[0]?.description || "Registration failed");
+  }
+  const data = await response.json();
+  return data;
+}
