@@ -156,3 +156,14 @@ export const registerUser = async(email, password, firstName, lastName) => {
   const data = await response.json();
   return data;
 }
+
+export const fetchUserTransactions = async(id) => {
+  try{
+    const response = await axios.get(`${API_BASE_URL}/user/${id}/transactions`);
+    return response.data;
+  }
+  catch(err){
+    console.error("An error occured: ", err);
+    throw err;
+  }
+}

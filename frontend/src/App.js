@@ -11,6 +11,9 @@ import CreateBudgetPage from "./pages/CreateBudgetPage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
 import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
+import UserTransactionsPage from "./pages/UserTransactionsPage";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 function App() {
@@ -45,18 +48,21 @@ function App() {
     );
   } 
   return (
-    <div>
+    <BrowserRouter>
       <Header user={user} />
-      <TransactionsPage />
-      <UsersPage />
-      <BudgetsPage />
-      <CategoriesPage />
-      <AccountsPage/>
-      <ReportsPage/>
-      <CreateTransactionPage/>
-      <CreateAccountPage/>
-      <CreateBudgetPage/>
-    </div>
+      <Routes>
+        <Route path = "/" element = {<DashboardPage/>}/>
+        <Route path="/transactions" element={<UserTransactionsPage user={user} />} />
+        <Route path = "/users" element = {<UsersPage/>}/>
+        <Route path = "/budgets" element = {<BudgetsPage/>}/>
+        <Route path = "/categories" element = {<CategoriesPage/>}/>
+        <Route path = "/accounts" element = {<AccountsPage/>}/>
+        <Route path = "/reports" element = {<ReportsPage/>}/>
+        <Route path = "/createTransaction" element = {<CreateTransactionPage/>}/>
+        <Route path = "/createBudget" element = {<CreateBudgetPage/>}/>
+        <Route path = "/createAccount" element = {<CreateAccountPage/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
