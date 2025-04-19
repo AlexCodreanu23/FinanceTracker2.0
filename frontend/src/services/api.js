@@ -167,3 +167,34 @@ export const fetchUserTransactions = async(id) => {
     throw err;
   }
 }
+
+
+export const fetchUserAccounts = async(id) => {
+  try{
+    const response = await axios.get(`${API_BASE_URL}/user/${id}/accounts`);
+    return response.data;
+  }catch(err){
+    console.error("An error occured:", err);
+    throw err;
+  }
+}
+
+export const fetchUserBudgets = async(id) => {
+  try{
+    const response = await axios.get(`${API_BASE_URL}/user/${id}/budgets`);
+    return response.data;
+  }catch(err){
+    console.error("An error occured:", err);
+    throw err;
+  }
+}
+
+export const fetchUserReports = async(id) => {
+  try{
+    const response = await axios.get(`${API_BASE_URL}/user/${id}/reports`);
+    return response.data;
+  }catch(err){
+    console.error("An error occured:", err);
+    throw err;
+  }
+}
