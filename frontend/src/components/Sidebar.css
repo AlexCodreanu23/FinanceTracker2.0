@@ -1,0 +1,32 @@
+.sidebar {
+    width: 6rem;      
+    background: var(--card-bg);
+    padding-top: 1.5rem;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar-month {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 1rem 0;          
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.125rem;     
+    transition: color 0.2s, background 0.2s;
+  }
+  
+  .sidebar-month:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  
+  .sidebar-month-active {
+    color: var(--text);
+    font-weight: bold;
+    background: rgba(255,255,255,0.1);
+  }
+  

@@ -1,16 +1,17 @@
-import React from "react"
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar";
+import "../components/DashboardPage.css";
 
-export default function DashboardPage () { 
-    return (
-        <div className="app-container">
-            <aside className="sidebar">
-            
-            </aside>
-            <main className="main-content">
-                <section className="top-row-grid">
 
-                </section>
-            </main>
-        </div>
-    );
+export default function DashboardPage() {
+  const [month, setMonth] = useState(new Date().getMonth());
+
+  return (
+    <div className="dashboard">
+      <Sidebar
+        selectedMonth={month}
+        onChangeMonth={setMonth}
+      />
+    </div>
+  );
 }
