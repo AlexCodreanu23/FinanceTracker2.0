@@ -1,12 +1,28 @@
 .dashboard {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .dashboard__content {
-    flex: 1;
-    padding: 1rem;
-    background: var(--bg);
-    color: var(--text);
-  }
-  
+  display: flex;
+  height: 100vh;
+}
+
+.dashboard__content {
+  flex: 1;
+  padding: 1.5rem;
+  background: var(--bg);
+  color: var(--text);
+  overflow-y: auto;
+}
+
+.dashboard__content > h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard__cards .card {
+  min-height: 120px;
+}
