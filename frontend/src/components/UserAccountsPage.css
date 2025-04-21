@@ -53,4 +53,11 @@
     text-align: right;
     color: #4b5563;
   }
+
+  .tbody td.type.asset {
+    color: #10b981; 
+  }
+  .tbody td.type.liability {
+    color: #ef4444; 
+  }
   

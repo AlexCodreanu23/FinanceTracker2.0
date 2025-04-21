@@ -66,10 +66,16 @@
     text-align: right;
     font-weight: 600;
   }
-  .positive {
-    color: #16a34a;              
+
+  .type.income {
+    color: #10b981; 
   }
-  .negative {
-    color: #dc2626;              
+  .type.expense {
+    color: #ef4444; 
   }
-  
+  .cell-amount.positive {
+    color: #10b981;  
+  }
+  .cell-amount.negative {
+    color: #ef4444; 
+  }

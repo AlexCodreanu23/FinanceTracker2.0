@@ -28,7 +28,7 @@ const AccountsPage = () => {
             ) : (
                 <ul>
                     {accounts.map((tx)=> (
-                        <li key = {tx.id}> {tx.name} - {tx.balance} - {tx.currency}
+                        <li key = {tx.id}> {tx.name} - {tx.balance} - {tx.currency} - {tx.accountType}
                         <button onClick = {() => handleDelete(tx.id)}> Delete Account</button>
                         </li>
                     ))};

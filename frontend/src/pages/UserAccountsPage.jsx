@@ -32,6 +32,7 @@ export default function UserAccountsPage({ user }) {
             <thead className="thead">
               <tr>
                 <th>Name</th>
+                <th className="type">Type</th>
                 <th className="balance">Balance</th>
                 <th className="currency">Currency</th>
               </tr>
@@ -40,6 +41,9 @@ export default function UserAccountsPage({ user }) {
               {accounts.map(acc => (
                 <tr key={acc.id}>
                   <td>{acc.name}</td>
+                  <td className={`type ${acc.accountType}`}>
+                    {acc.accountType}
+                  </td>
                   <td className="balance">{acc.balance.toFixed(2)}</td>
                   <td className="currency">{acc.currency}</td>
                 </tr>

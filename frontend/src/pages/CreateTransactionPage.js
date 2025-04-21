@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { createTransaction } from "../services/api";
 
 const CreateTransactionPage = () => {
@@ -6,7 +6,8 @@ const CreateTransactionPage = () => {
     amount: "",
     accountId: "",
     categoryId: "",
-    userId: ""
+    userId: "",
+    type: ""
   });
 
   const [message, setMessage] = useState("");
@@ -19,15 +20,15 @@ const CreateTransactionPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const createdTransaction = await createTransaction(transactionData);
+      await createTransaction(transactionData);
       setMessage("The transaction has been created successfully!");
       setTransactionData({
         amount: "",
         accountId: "",
         categoryId: "",
-        userId: ""
+        userId: "",
+        type: ""
       });
-      console.log("Transaction:", createdTransaction);
     } catch (error) {
       setMessage("An error occurred while creating the transaction!");
     }
@@ -37,6 +38,7 @@ const CreateTransactionPage = () => {
     <div>
       <h2>Create a Transaction</h2>
       {message && <p>{message}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>Suma:</label>
@@ -48,6 +50,7 @@ const CreateTransactionPage = () => {
             required
           />
         </div>
+
         <div>
           <label>ID Cont:</label>
           <input
@@ -58,6 +61,7 @@ const CreateTransactionPage = () => {
             required
           />
         </div>
+
         <div>
           <label>ID Categorie:</label>
           <input
@@ -68,6 +72,7 @@ const CreateTransactionPage = () => {
             required
           />
         </div>
+
         <div>
           <label>ID User:</label>
           <input
@@ -78,6 +83,21 @@ const CreateTransactionPage = () => {
             required
           />
         </div>
+
+        <div>
+          <label>Type:</label>
+          <select
+            name="type"
+            value={transactionData.type}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>— Select type —</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+
         <button type="submit">Create a Transaction</button>
       </form>
     </div>

@@ -31,7 +31,7 @@ const TransactionsPage = () => {
           <ul>
             {transactions.map((tx) => (
               <li key={tx.id}>
-                {tx.amount} - {tx.accountId} - {tx.categoryId} - {tx.userId} - {tx.date}
+                {tx.amount} - {tx.accountId} - {tx.categoryId} - {tx.userId} - {tx.date} - {tx.type}
                 <button onClick={() => handleDelete(tx.id)}>Delete Transaction</button>
               </li>
             ))}

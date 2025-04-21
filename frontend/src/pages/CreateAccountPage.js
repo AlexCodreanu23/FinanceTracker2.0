@@ -6,7 +6,8 @@ const CreateAccountPage = () => {
         name: "",
         balance: "",
         currency: "",
-        userId: ""
+        userId: "",
+        accountType: ""
     });
 
     const [message, setMessage] = useState("");
@@ -25,7 +26,8 @@ const CreateAccountPage = () => {
                 name: "",
                 balance: "",
                 currency: "",
-                userId: ""
+                userId: "",
+                accountType: ""
             });
             console.log("Account: ", createdAccount);
         }catch(error){
@@ -76,6 +78,19 @@ const CreateAccountPage = () => {
                         onChange = {handleChange}
                         required
                     />
+                </div>
+                <div>
+                <label>Account Type:</label>
+                <select
+                    name="accountType"
+                    value={accountData.accountType}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="" disabled>— Select type —</option>
+                    <option value="asset">Asset</option>
+                    <option value="liability">Liability</option>
+                </select>
                 </div>
                 <button type = "submit">Create an account</button>
             </form>
