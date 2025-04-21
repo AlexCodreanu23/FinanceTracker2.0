@@ -10,5 +10,6 @@ namespace FinanceTracker_2._0.Models.DTOs.AccountDTOs
         public string Currency { get; set; } = "RON";
         [Required]
         public Guid UserId { get; set; }
+        public string AccountType { get; set; }
     }
 }

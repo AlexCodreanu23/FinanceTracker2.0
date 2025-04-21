@@ -13,5 +13,6 @@ namespace FinanceTracker_2._0.Models.DTOs.TransactionDTOs
         public Guid CategoryId { get; set; }
         [Required]
         public Guid UserId { get; set; }
+        public string Type { get; set; }
     }
 }
