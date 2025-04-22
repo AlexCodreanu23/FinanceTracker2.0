@@ -33,6 +33,7 @@ export default function UserTransactionsPage({ user }) {
               <thead className="thead">
                 <tr>
                   <th>Type</th>
+                  <th>Category</th>
                   <th>Date</th>
                   <th>Amount</th>
                 </tr>
@@ -42,6 +43,9 @@ export default function UserTransactionsPage({ user }) {
                   <tr key={tx.id}>
                     <td className={`type ${tx.type}`}>
                       {tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}
+                    </td>
+                    <td className="category-name">
+                      {tx.categoryName}
                     </td>
                     <td className="cell-date">
                       {new Date(tx.date).toLocaleDateString()}

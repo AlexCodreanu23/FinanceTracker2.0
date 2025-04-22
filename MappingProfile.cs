@@ -30,7 +30,9 @@ namespace FinanceTracker_2._0.MappingProfiles
             CreateMap<CreateReportDTO, Report>();
             CreateMap<UpdateReportDTO, Report>();
 
-            CreateMap<Transaction, TransactionDTO>();
+            CreateMap<Transaction, TransactionDTO>()
+            .ForMember(d => d.CategoryName,
+                        opt => opt.MapFrom(src => src.Category.name));
             CreateMap<CreateTransactionDTO, Transaction>();
             CreateMap<UpdateTransactionDTO, Transaction>();
 
