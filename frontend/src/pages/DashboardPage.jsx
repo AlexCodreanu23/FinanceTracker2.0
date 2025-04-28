@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
 import { fetchUserAccounts, fetchUserTransactions } from "../services/api";
 import "../components/DashboardPage.css";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid
+} from "recharts";
 
 const monthNames = [
   "Jan","Feb","Mar","Apr","May","Jun",
@@ -31,6 +39,28 @@ export default function DashboardPage({ user }) {
       .finally(() => setLoading(false));
   }, [user]);
 
+  const yearlyData = useMemo(() => {
+    return monthNames.map((name, monthIdx) => {
+      const monthlyTxs = txs.filter(tx => {
+        const d = new Date(tx.date);
+        return d.getFullYear() === new Date().getFullYear()
+            && d.getMonth() === monthIdx;
+      });
+      const income  = monthlyTxs
+        .filter(t => t.type === "income")
+        .reduce((sum, t) => sum + t.amount, 0);
+      const expense = monthlyTxs
+        .filter(t => t.type === "expense")
+        .reduce((sum, t) => sum + t.amount, 0);
+      return { month: name, income, expense };
+    });
+  }, [txs]);
+
+  const COLORS = [
+    "#3f8efc", "#ffbb28", "#00C49F",
+    "#FF8042", "#8884D8", "#82ca9d"
+  ];
+
   const monthlyTxs = txs.filter(tx => {
       const txMonth = new Date(tx.date).getMonth();
       const txYear = new Date(tx.date).getFullYear();
@@ -44,6 +74,18 @@ export default function DashboardPage({ user }) {
 
   const income = monthlyTxs.filter(t => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
   const expenses = monthlyTxs.filter(t => t.type === "expense").reduce((sum, t)=> sum  + t.amount, 0);
+
+  const monthlyExpenses = monthlyTxs.filter(tx => tx.type === "expense");
+  const byCategory = monthlyExpenses.reduce((acc,tx) => {
+      acc[tx.categoryName] = (acc[tx.categoryName] || 0) + tx.amount;
+      return acc;
+  }, {});
+
+
+  const pieData = Object.entries(byCategory).map(
+    ([name, value]) => ({name,value})
+  );
+
 
   return (
     <div className="dashboard">
@@ -72,6 +114,62 @@ export default function DashboardPage({ user }) {
             </Card>
           </div>
         )}
+        <div className="dashboard__charts">
+          <Card title="Spending by Category">
+            <PieChart width={500} height={350}>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label
+              >
+                {pieData.map((entry, idx) => (
+                  <Cell
+                    key={`cell-${idx}`}
+                    fill={COLORS[idx % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend
+                layout="vertical"
+                align="right"
+                verticalAlign="middle"
+                formatter={name => name}
+              />
+            </PieChart>
+          </Card>
+          <Card title="Income & Expenses">
+        <ResponsiveContainer width="100%" aspect={2}>
+          <LineChart data={yearlyData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip formatter={val => `$${val.toLocaleString()}`} />
+            <Legend verticalAlign="top" />
+            <Line
+              type="monotone"
+              dataKey="expense"
+              name="Expenses"
+              stroke="#ff8042"
+              strokeWidth={2}
+              dot={{ r: 3 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="income"
+              name="Income"
+              stroke="#00C49F"
+              strokeWidth={2}
+              dot={{ r: 3 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        </Card>
+        </div>
       </div>
     </div>
   );

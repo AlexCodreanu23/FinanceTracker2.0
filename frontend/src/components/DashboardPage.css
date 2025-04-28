@@ -26,3 +26,20 @@
 .dashboard__cards .card {
   min-height: 120px;
 }
+
+
+.dashboard__charts {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;               
+}
+
+.recharts-legend-item-text {
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .dashboard__charts {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
