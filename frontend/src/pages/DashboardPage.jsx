@@ -9,7 +9,9 @@ import {
   Cell,
   Tooltip,
   Legend,
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid,
+  BarChart, Bar,
+  LabelList
 } from "recharts";
 
 const monthNames = [
@@ -80,6 +82,15 @@ export default function DashboardPage({ user }) {
       acc[tx.categoryName] = (acc[tx.categoryName] || 0) + tx.amount;
       return acc;
   }, {});
+
+  const incomeBySource = useMemo(() => {
+      const acc = {};
+      monthlyTxs.filter(tx => tx.type === "income")
+                .forEach(tx => {
+                  acc[tx.categoryName] = (acc[tx.categoryName] || 0) + tx.amount;
+                });
+      return Object.entries(acc).map(([name, value]) =>  ({name, value}));          
+  }, [monthlyTxs]);
 
 
   const pieData = Object.entries(byCategory).map(
@@ -167,6 +178,52 @@ export default function DashboardPage({ user }) {
               dot={{ r: 3 }}
             />
           </LineChart>
+        </ResponsiveContainer>
+        </Card>
+        <Card title = "Income Source">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+            data={incomeBySource}
+            margin={{ top: 20, right: 10, left: 0, bottom: 60 }} 
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <XAxis
+              dataKey="name"
+              interval={0}                
+              height={50}               
+              tick={{
+                fill: 'var(--text)',
+                fontSize: 12,
+                angle: -30,                
+                textAnchor: 'end'
+              }}
+            />
+            <YAxis
+              tickFormatter={val => `$${val}`}
+              stroke="var(--text)"
+              tick={{ fill: 'var(--text)' }}
+            />
+            <Tooltip
+            cursor = {false}
+              labelFormatter={label => `Source: ${label}`}   
+              formatter={val => `$${val.toLocaleString()}`}
+              contentStyle={{
+                backgroundColor: 'var(--card-bg)',
+                border: `1px solid var(--border)`
+              }}
+              labelStyle={{ color: 'var(--text)' }}
+              itemStyle={{ color: 'var(--text)' }}
+            />
+            <Bar dataKey="value" fill="#3f8efc" radius={[4, 4, 0, 0]}>
+              <LabelList 
+                dataKey="value" 
+                position="top" 
+                formatter={val => `$${val}`} 
+                fill="var(--text)" 
+                fontSize={12}
+              />
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
         </Card>
         </div>

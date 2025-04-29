@@ -1,3 +1,11 @@
+:root {
+  --bg: #1e1e2e;              
+  --card-bg: rgba(255,255,255,0.05);  
+  --border: rgba(255,255,255,0.1);     
+  --text: #ccc;               
+}
+
+
 .dashboard {
   display: flex;
   height: 100vh;
@@ -38,8 +46,14 @@
   white-space: nowrap;
 }
 
+.card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
 @media (min-width: 768px) {
   .dashboard__charts {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(3, 1fr); 
   }
 }
