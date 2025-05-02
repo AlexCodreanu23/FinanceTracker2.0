@@ -13,6 +13,7 @@ import {
   BarChart, Bar,
   LabelList
 } from "recharts";
+import {Link} from "react-router-dom"; 
 
 const monthNames = [
   "Jan","Feb","Mar","Apr","May","Jun",
@@ -103,9 +104,22 @@ export default function DashboardPage({ user }) {
       <Sidebar selectedMonth={month} onChangeMonth={setMonth} />
 
       <div className="dashboard__content">
-        <h2 className="dashboard__month-title">
-          {monthNames[month]} Overview
-        </h2>
+        <div className="dashboard__content-header">
+          <h2 className="dashboard__month-title">
+            {monthNames[month]} Overview
+          </h2>
+          <nav className="dashboard__subnav">
+            <Link to="/transactions" className="dashboard__subnav-item">
+              My transactions
+            </Link>
+            <Link to="/budgets" className="dashboard__subnav-item">
+              My Budgets
+            </Link>
+            <Link to="/reports" className="dashboard__subnav-item">
+              My Reports
+            </Link>
+          </nav>
+        </div>
         
         {loading ? (
           <p>Loading data…</p>

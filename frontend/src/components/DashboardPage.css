@@ -52,6 +52,25 @@
   box-shadow: none !important;
 }
 
+.dashboard__content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard__subnav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard__subnav-item {
+  padding: 0.5rem 0.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
 @media (min-width: 768px) {
   .dashboard__charts {
     grid-template-columns: repeat(3, 1fr); 
