@@ -17,7 +17,7 @@ export default function UserTransactionsPage({ user }) {
   }, [user]);
 
   return (
-    <div className="page">
+    <div className="user-transactions-page">
       <div className="wrapper">
         <h1 className="title">My Transactions</h1>
 
