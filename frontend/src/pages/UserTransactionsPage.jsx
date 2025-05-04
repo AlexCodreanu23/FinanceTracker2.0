@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserTransactions } from "../services/api";
+import {Link} from "react-router-dom"
 import "../components/UserTransactionsPage.css";
 
 export default function UserTransactionsPage({ user }) {
@@ -20,6 +21,9 @@ export default function UserTransactionsPage({ user }) {
     <div className="user-transactions-page">
       <div className="wrapper">
         <h1 className="title">My Transactions</h1>
+        <Link to= "/CreateTransaction" className="btn-add-transaction">
+            Add a transaction
+        </Link>
 
         <div className="card">
           {loading && <div className="loading">Loading…</div>}

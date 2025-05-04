@@ -109,3 +109,16 @@
   font-weight: 700;
   color: #ffffff;
 }
+
+.user-transactions-page .btn-add-transaction {
+  background-color: #2979ff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.user-transactions-page .btn-add-transaction:hover {
+  background-color: #1c5ec0;
+}

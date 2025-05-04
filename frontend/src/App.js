@@ -58,7 +58,7 @@ function App() {
         <Route path = "/categories" element = {<CategoriesPage/>}/>
         <Route path = "/accounts" element = {<UserAccountsPage user = {user}/>}/>
         <Route path = "/reports" element = {<UserReportsPage user = {user}/>}/>
-        <Route path = "/createTransaction" element = {<CreateTransactionPage/>}/>
+        <Route path = "/createTransaction" element = {<CreateTransactionPage user ={user}/>}/>
         <Route path = "/createBudget" element = {<CreateBudgetPage/>}/>
         <Route path = "/createAccount" element = {<CreateAccountPage/>}/>
       </Routes>

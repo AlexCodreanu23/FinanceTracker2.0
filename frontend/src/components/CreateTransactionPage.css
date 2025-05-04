@@ -1,0 +1,59 @@
+.create-transaction-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .create-transaction-page .title {
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+  }
+  
+  .create-transaction-page .form {
+    display: grid;
+    grid-gap: 1rem;
+  }
+  
+  .create-transaction-page label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  .create-transaction-page input,
+  .create-transaction-page select {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: #1e1e2e;
+    color: var(--text-primary);
+  }
+  
+  .create-transaction-page .btn-submit {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color var(--transition);
+  }
+  
+  .create-transaction-page .btn-submit:hover {
+    background-color: #1c5ec0;
+  }
+  
+  .create-transaction-page .message {
+    margin-bottom: 1rem;
+    color: var(--success);
+    text-align: center;
+  }
+  

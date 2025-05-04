@@ -1,47 +1,52 @@
-import React, { useState } from "react";
-import { createTransaction } from "../services/api";
+import React, { useEffect, useState } from "react";
+import { createTransaction, fetchUserAccounts, fetchCategories } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import "../components/CreateTransactionPage.css";
 
-const CreateTransactionPage = () => {
+export default function CreateTransactionPage ({user}) {
   const [transactionData, setTransactionData] = useState({
     amount: "",
     accountId: "",
     categoryId: "",
-    userId: "",
     type: ""
   });
-
+  const [accounts, setAccounts] = useState([]);
+  const [categories, setCategories] = useState([])
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchUserAccounts(user.id).then(setAccounts);
+    fetchCategories(user.id).then(setCategories);
+  }, [user.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTransactionData({ ...transactionData, [name]: value });
+    setTransactionData(data => ({ ...data, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createTransaction(transactionData);
-      setMessage("The transaction has been created successfully!");
-      setTransactionData({
-        amount: "",
-        accountId: "",
-        categoryId: "",
-        userId: "",
-        type: ""
+      await createTransaction({
+        ...transactionData,
+        userId: user.id
       });
+      setMessage("The transaction has been created successfully!");
+      setTimeout(()=>navigate("/transactions"),1000);
     } catch (error) {
       setMessage("An error occurred while creating the transaction!");
     }
   };
 
   return (
-    <div>
-      <h2>Create a Transaction</h2>
-      {message && <p>{message}</p>}
+    <div className="create-transaction-page">
+      <h2 className="title">Add Transaction</h2>
+      {message && <p className="message">{message}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Suma:</label>
+      <form onSubmit={handleSubmit} className="form">
+        <label>
+          Amount
           <input
             type="number"
             name="amount"
@@ -49,43 +54,44 @@ const CreateTransactionPage = () => {
             onChange={handleChange}
             required
           />
-        </div>
+        </label>
 
-        <div>
-          <label>ID Cont:</label>
-          <input
-            type="text"
+        <label>
+          Account
+          <select
             name="accountId"
             value={transactionData.accountId}
             onChange={handleChange}
             required
-          />
-        </div>
+          >
+            <option value="" disabled>— Select account —</option>
+            {accounts.map(a => (
+              <option key={a.id} value={a.id}>
+                {a.name} ({a.balance})
+              </option>
+            ))}
+          </select>
+        </label>
 
-        <div>
-          <label>ID Categorie:</label>
-          <input
-            type="text"
+        <label>
+          Category
+          <select
             name="categoryId"
             value={transactionData.categoryId}
             onChange={handleChange}
             required
-          />
-        </div>
+          >
+            <option value="" disabled>— Select category —</option>
+            {categories.map(c => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </label>
 
-        <div>
-          <label>ID User:</label>
-          <input
-            type="text"
-            name="userId"
-            value={transactionData.userId}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Type:</label>
+        <label>
+          Type
           <select
             name="type"
             value={transactionData.type}
@@ -96,12 +102,12 @@ const CreateTransactionPage = () => {
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
-        </div>
+        </label>
 
-        <button type="submit">Create a Transaction</button>
+        <button type="submit" className="btn-submit">
+          Add Transaction
+        </button>
       </form>
     </div>
   );
 };
-
-export default CreateTransactionPage;
