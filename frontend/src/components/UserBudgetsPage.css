@@ -1,67 +1,100 @@
 
-.page {
-    min-height: 100vh;
-    background-color: #f3f4f6;   
+  :root {
+    --bg-dashboard:    #1e1e2e;
+    --bg-card:         #2c2c3e;
+    --text-primary:    #e0e0e0;
+    --text-secondary:  #a0a0a0;
+    --accent:          #2979ff;
+    --success:         #4caf50;
+    --error:           #e74c3c;
+    --border-color:    #3a3a4e;
+    --radius:          8px;
+    --transition:      0.3s ease;
   }
-  .inner {
+  .user-budgets-page {
+    background-color: var(--bg-dashboard);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif; 
+  }
+  .user-budgets-page .inner {
     max-width: 80rem;            
     margin: 0 auto;
     padding: 1.5rem;             
-    background: #ffffff;
+    background-color: var(--bg-card);
     border-radius: 0.5rem;       
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    overflow-x: auto;
-  }
-  
-  .title {
-    font-size: 1.875rem;        
-    font-weight: 700;
-    color: #1f2937;              
-    margin-bottom: 1rem;         
-  }
-  
-  .loading,
-  .error,
-  .empty {
-    padding: 1.5rem;             
-    text-align: center;
-    font-size: 0.875rem;         
-    color: #4b5563;              
-  }
-  .error {
-    color: #dc2626;              
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .thead th {
-    background-color: #f9fafb;  
-    text-transform: uppercase;
-    font-size: 0.75rem;         
-    font-weight: 500;
-    color: #6b7280;             
-    padding: 0.75rem 1.5rem;     
-    text-align: left;
-  }
-  .tbody tr:hover {
-    background-color: #f9fafb;   
-  }
-  .tbody td {
-    padding: 0.75rem 1.5rem;     
-    font-size: 0.875rem;         
-    color: #374151;            
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: box-shadow var(--transition);
   }
 
-  .amount {
+  .user-budgets-page .inner:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.8);
+  }
+  
+  .user-budgets-page .title {
+    font-size: 2rem;        
+    font-weight: 700;
+    color: var(--accent);              
+    margin-bottom: 1.5rem;         
+  }
+  
+  .user-budgets-page .loading,
+  .user-budgets-page .error,
+  .user-budgets-page .empty {
+    padding: 1.5rem;             
+    text-align: center;
+    font-size: 1rem;         
+    color: var(--text-secondary);              
+  }
+  .user-budgets-page .error {
+    color: var(--error);              
+  }
+  
+  .user-budgets-page .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    min-width: 600px;
+  }
+  .user-budgets-page .thead th {
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(255,255,255,0.05);
+  }
+  .user-budgets-page .tbody tr:nth-child(odd) {
+    background-color: rgba(255,255,255,0.03);
+  }
+  .user-budgets-page .tbody tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.06);
+  }
+  .user-budgets-page .tbody tr:hover {
+    background-color: rgba(255,255,255,0.12) !important;
+  }
+  
+  .user-budgets-page .tbody td {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    background: transparent;
+  }
+
+  .user-budgets-page .amount {
     text-align: right;
     font-weight: 600;
+    color: var(--accent);
   }
-  .start-date,
-  .end-date {
+  .user-budgets-page .start-date,
+  .user-budgets-page .end-date {
     text-align: right;
     font-style: italic;
-    color: #6b7280;              
+    color: var(--text-secondary);
   }
   

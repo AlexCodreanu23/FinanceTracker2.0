@@ -27,7 +27,7 @@ export default function UserBudgetsPage({ user }) {
   };
 
   return (
-    <div className="page">
+    <div className="user-budgets-page">
       <div className="inner">
         <h1 className="title">My Budgets</h1>
 

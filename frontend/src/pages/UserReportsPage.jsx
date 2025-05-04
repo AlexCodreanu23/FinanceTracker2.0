@@ -30,7 +30,7 @@ export default function UserReportsPage({ user }) {
   };
 
   return (
-    <div className="page">
+    <div className="user-reports-page">
       <div className="inner">
         <h1 className="title">My Reports</h1>
 
