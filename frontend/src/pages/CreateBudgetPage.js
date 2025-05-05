@@ -1,47 +1,47 @@
-import React, {useState} from "react";
-import {createBudget} from  "../services/api";
+import React, {useEffect, useState} from "react";
+import {createBudget, fetchCategories} from  "../services/api";
+import { useNavigate } from "react-router-dom";
+import "../components/CreateBudgetPage.css";
 
-const CreateBudgetPage = () =>{
+export default function CreateBudgetPage({user}) {
     const[budgetData, setBudgetData] = useState({
         budgetName: "",
         amount: "",
         start_date: "",
         end_date: "",
-        categoryId: "",
-        userId: ""
+        categoryId: ""
     });
-
+    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(()=> {
+        fetchCategories(user.id).then(setCategories);
+    },[user.id]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setBudgetData({...budgetData, [name]: value});
+        setBudgetData(data => ({...data, [name]: value}));
     }
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
         try{
-            const createdBudget = await createBudget(budgetData);
-            setMessage("The budget has been succesfully created");
-            setBudgetData({
-                budgetName: "",
-                amount: "",
-                start_date:"",
-                end_date: "",
-                categoryId: "",
-                userId: ""
+            await createBudget({
+                ...budgetData,
+                userId: user.id
             });
-            console.log("Budget: ", createdBudget);
+            setMessage("The budget has been succesfully created");
+            setTimeout(()=> navigate("/budgets"),1000);
         }catch(err){
             setMessage("An error has occured while creating a new budget");
         }
     };
     return (
-        <div>
-            <h2>Create a budget</h2>
-            {message && <p>{message}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
+        <div className="create-budget-page">
+            <h2 className="title">Add a new budget</h2>
+            {message && <p className="message">{message}</p>}
+            <form onSubmit={handleSubmit} className="form">
                     <label>BudgetName </label>
                     <input 
                         type = "text"
@@ -50,8 +50,6 @@ const CreateBudgetPage = () =>{
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
                     <label>Amount</label>
                     <input 
                         type = "number"
@@ -60,8 +58,6 @@ const CreateBudgetPage = () =>{
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
                     <label>Start date</label>
                     <input 
                         type = "date"
@@ -70,8 +66,6 @@ const CreateBudgetPage = () =>{
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
                     <label>End date</label>
                     <input
                         type = "date"
@@ -80,31 +74,24 @@ const CreateBudgetPage = () =>{
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
-                    <label>CategoryId</label>
-                    <input
-                        type = "text"
-                        name = "categoryId"
+                    <label>
+                    Category
+                    <select
+                        name="categoryId"
                         value={budgetData.categoryId}
                         onChange={handleChange}
                         required
-                    />
-                </div>
-                <div>
-                    <label>UserId</label>
-                    <input
-                        type = "text"
-                        name = "userId"
-                        value={budgetData.userId}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type = "submit">Create a new budget</button>
+                    >
+                    <option value="" disabled>— Select category —</option>
+                    {categories.map(c => (
+                    <option key={c.id} value={c.id}>
+                        {c.name}
+                    </option>
+                    ))}
+                </select>
+                </label>
+                <button type = "submit" className="btn-submit">Create a new budget</button>
             </form>
         </div>
     );
 };
-
-export default CreateBudgetPage;

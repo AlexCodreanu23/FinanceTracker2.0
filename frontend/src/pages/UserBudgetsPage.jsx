@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserBudgets } from "../services/api";
+import { Link } from "react-router-dom";
 import "../components/UserBudgetsPage.css";
 
 export default function UserBudgetsPage({ user }) {
@@ -30,6 +31,9 @@ export default function UserBudgetsPage({ user }) {
     <div className="user-budgets-page">
       <div className="inner">
         <h1 className="title">My Budgets</h1>
+        <Link to="/CreateBudget" className = "btn-add-budget">
+          Add a budget
+        </Link>
 
         {loading && <div className="loading">Loading…</div>}
         {error   && <div className="error">Error: {error}</div>}
