@@ -1,63 +1,64 @@
-.page {
-    min-height: 100vh;
-    background-color: #f3f4f6; 
-    padding: 2rem;
-  }
-  
-  .inner {
-    max-width: 80rem; 
-    margin: 0 auto;
-    background: white;
-    border-radius: 0.5rem; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    overflow-x: auto;
-  }
+.user-accounts-page {
+  max-width: 80rem;
+  margin: 2rem auto;
+  background: #2c2e3e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+}
 
-  .title {
-    font-size: 1.875rem; 
-    font-weight: 700;
-    color: #1f2937; 
-    margin-bottom: 1rem;
-  }
+.user-accounts-page .title {
+  margin-bottom: 1rem;
+  color: #2979ff;
+}
 
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .thead th {
-    background-color: #f9fafb; 
-    text-transform: uppercase;
-    font-size: 0.75rem; 
-    font-weight: 500;
-    color: #6b7280;
-    padding: 0.75rem 1.5rem;
-    text-align: left;
-  }
-  .tbody tr:hover {
-    background-color: #f9fafb; 
-  }
-  
-  .tbody td {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    color: #374151;
-  }
-  
-  .balance {
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  .currency {
-    text-align: right;
-    color: #4b5563;
-  }
+.user-accounts-page .btn-add-account {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #2979ff;              
+  text-decoration: none;
+  transition: color 0.3s ease; 
+}
+.user-accounts-page .btn-add-account:hover {
+  color: #1c5ec0;
+}
 
-  .tbody td.type.asset {
-    color: #10b981; 
-  }
-  .tbody td.type.liability {
-    color: #ef4444; 
-  }
-  
+.user-accounts-page .table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.user-accounts-page .thead {
+  background: #323546;
+}
+
+.user-accounts-page .thead th {
+  padding: 0.75rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  text-align: left;
+}
+
+.user-accounts-page .tbody tr:not(:last-child) {
+  border-bottom: 1px solid #3a3e4e;
+}
+
+.user-accounts-page .tbody tr:hover {
+  background: #3a3d5a;
+}
+
+.user-accounts-page td {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.user-accounts-page .balance {
+  text-align: right;
+}
+.user-accounts-page .currency {
+  text-align: center;
+}

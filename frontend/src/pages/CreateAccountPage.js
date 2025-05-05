@@ -1,45 +1,42 @@
 import React, {useState} from "react";
 import { createAccount} from "../services/api";
+import { useNavigate } from "react-router-dom";
+import "../components/CreateAccountPage.css";
 
-const CreateAccountPage = () => {
+export default function CreateAccountPage({user}) {
     const [accountData, setAccountData] = useState({
         name: "",
         balance: "",
         currency: "",
-        userId: "",
         accountType: ""
     });
 
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleChange = (e) =>{
         const {name, value} = e.target;
-        setAccountData({...accountData, [name]: value});
+        setAccountData(data => ({...data, [name]: value}));
     }
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
         try{
-            const createdAccount = await createAccount(accountData);
-            setMessage("An account has been created succesfully");
-            setAccountData({
-                name: "",
-                balance: "",
-                currency: "",
-                userId: "",
-                accountType: ""
+            await createAccount({
+                ...accountData,
+                userId: user.id
             });
-            console.log("Account: ", createdAccount);
+            setMessage("An account has been created succesfully");
+            setTimeout(() => navigate("/accounts"),1000);
         }catch(error){
             setMessage("An error has occured while creating an account!");
         }
     };
     return(
-        <div>
-            <h2>Create a new account</h2>
-            {message && <p>{message}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
+        <div className="create-account-page">
+            <h2 className="title">Create a new account</h2>
+            {message && <p className="message">{message}</p>}
+            <form onSubmit={handleSubmit} className="form">
                     <label>Name:</label>
                     <input
                         type = "text"
@@ -48,8 +45,6 @@ const CreateAccountPage = () => {
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
                     <label>Balance</label>
                     <input
                         type = "number"
@@ -58,8 +53,6 @@ const CreateAccountPage = () => {
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <div>
                     <label>Currency</label>
                     <input
                     type = "text"
@@ -68,34 +61,19 @@ const CreateAccountPage = () => {
                     onChange = {handleChange}
                     required 
                     />
-                </div>
-                <div>
-                    <label>UserId</label>
-                    <input
-                        type = "text"
-                        name = "userId"
-                        value = {accountData.userId}
-                        onChange = {handleChange}
+                    <label>Account Type:</label>
+                    <select
+                        name="accountType"
+                        value={accountData.accountType}
+                        onChange={handleChange}
                         required
-                    />
-                </div>
-                <div>
-                <label>Account Type:</label>
-                <select
-                    name="accountType"
-                    value={accountData.accountType}
-                    onChange={handleChange}
-                    required
-                >
+                    >
                     <option value="" disabled>— Select type —</option>
                     <option value="asset">Asset</option>
                     <option value="liability">Liability</option>
-                </select>
-                </div>
-                <button type = "submit">Create an account</button>
+                    </select>
+                <button type = "submit" className="btn-submit">Create an account</button>
             </form>
         </div>
     );
 };
-
-export default CreateAccountPage;

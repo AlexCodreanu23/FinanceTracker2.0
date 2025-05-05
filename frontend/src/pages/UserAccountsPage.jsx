@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserAccounts } from "../services/api";
+import { Link } from "react-router-dom";
 import "../components/UserAccountsPage.css";
 
 export default function UserAccountsPage({ user }) {
@@ -17,9 +18,12 @@ export default function UserAccountsPage({ user }) {
   }, [user]);
 
   return (
-    <div className="page">
+    <div className="user-accounts-page">
       <div className="inner">
         <h1 className="title">My Accounts</h1>
+        <Link to="/CreateAccount" className="btn-add-account">
+          Add a new account
+        </Link>
 
         {loading && <div className="tbody"><em>Loading…</em></div>}
         {error && <div className="tbody"><span style={{ color: "red" }}>Error: {error}</span></div>}

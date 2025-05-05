@@ -118,6 +118,9 @@ export default function DashboardPage({ user }) {
             <Link to="/reports" className="dashboard__subnav-item">
               My Reports
             </Link>
+            <Link to="/accounts" className="dashboard__subnav-item">
+              My accounts
+            </Link>
           </nav>
         </div>
         
