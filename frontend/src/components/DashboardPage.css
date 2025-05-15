@@ -71,6 +71,22 @@
   border-radius: 0.25rem;
 }
 
+.dashboard__signout-button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dashboard__signout-button:hover {
+  background: var(--sidebar-hover);
+  color: var(--text);
+}
+
 @media (min-width: 768px) {
   .dashboard__charts {
     grid-template-columns: repeat(3, 1fr); 

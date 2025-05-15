@@ -50,8 +50,8 @@ function App() {
     <BrowserRouter>
       <Header user={user} />
       <Routes>
-      <Route path = "/" element = {<DashboardPage user = {user}/>}/>
-        <Route path = "/dashboard" element = {<DashboardPage/>}/>
+      <Route path = "/" element = {<DashboardPage user = {user} setUser={setUser}/>}/>
+        <Route path = "/dashboard" element = {<DashboardPage user = {user} setUser={setUser}/>}/>
         <Route path="/transactions" element={<UserTransactionsPage user={user} />} />
         <Route path = "/users" element = {<UsersPage/>}/>
         <Route path = "/budgets" element = {<UserBudgetsPage user = {user}/>}/>

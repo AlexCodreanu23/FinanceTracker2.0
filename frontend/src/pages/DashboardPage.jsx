@@ -13,14 +13,24 @@ import {
   BarChart, Bar,
   LabelList
 } from "recharts";
-import {Link} from "react-router-dom"; 
+import {Link, useNavigate} from "react-router-dom"; 
 
 const monthNames = [
   "Jan","Feb","Mar","Apr","May","Jun",
   "Jul","Aug","Sep","Oct","Nov","Dec"
 ];
 
-export default function DashboardPage({ user }) {
+export default function DashboardPage({ user, setUser }) {
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+    // Clear stored user and update app state
+    localStorage.removeItem("user");
+    setUser(null);
+    // Redirect to login
+    navigate("/");
+  };
+
+
   const [month, setMonth]       = useState(new Date().getMonth());
   const [accounts, setAccounts] = useState([]);
   const [txs, setTxs]           = useState([]);
@@ -122,6 +132,9 @@ export default function DashboardPage({ user }) {
               My accounts
             </Link>
           </nav>
+          <button onClick={handleSignOut} className="dashboard__signout-button">
+            Sign out
+          </button>
         </div>
         
         {loading ? (
