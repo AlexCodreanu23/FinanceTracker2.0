@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0aKW0QehA2Q=",
+  "dgSpecHash": "RIyYQemwYdA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alex2\\source\\repos\\FinanceTracker_2.0\\FinanceTracker_2.0\\FinanceTracker_2.0.Tests\\FinanceTracker_2.0.Tests.csproj",
+  "projectFilePath": "C:\\Users\\alex2\\source\\repos\\FinanceTracker-Clean\\FinanceTracker_2.0.Tests\\FinanceTracker_2.0.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alex2\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\alex2\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
