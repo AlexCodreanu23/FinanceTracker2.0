@@ -12,7 +12,13 @@ export default function UserTransactionsPage({ user }) {
     if (!user) return;
     setLoading(true);
     fetchUserTransactions(user.id)
-      .then(data => setTxs(data))
+      .then(raw => {
+      const arr = raw;
+      const sorted = [...arr].sort((a, b) =>
+        new Date(b.date) - new Date(a.date)
+      );
+      setTxs(sorted);
+    })
       .catch(err => setError(err.message || "Error loading"))
       .finally(() => setLoading(false));
   }, [user]);

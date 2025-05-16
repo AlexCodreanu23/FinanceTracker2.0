@@ -13,9 +13,11 @@ export default function UserBudgetsPage({ user }) {
     setLoading(true);
 
     fetchUserBudgets(user.id)
-      .then(data => {
-        console.log("raw budgets:", data);
-        setBudgets(data);
+     .then(data => {
+      const sorted = [...data].sort((a, b) =>
+        new Date(b.start_date) - new Date(a.start_date)
+      );
+      setBudgets(sorted);
       })
       .catch(err => setError(err.message || "Error loading"))
       .finally(() => setLoading(false));

@@ -12,7 +12,12 @@ export default function UserReportsPage({ user }) {
     setLoading(true);
 
     fetchUserReports(user.id)
-      .then(data => setReports(data))
+      .then(data => {
+      const sorted = [...data].sort((a, b) =>
+        new Date(b.start_date) - new Date(a.start_date)
+      );
+      setReports(sorted);
+      })
       .catch(err => setError(err.message || "Error loading"))
       .finally(() => setLoading(false));
   }, [user]);
