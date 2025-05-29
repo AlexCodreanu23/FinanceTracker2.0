@@ -23,10 +23,8 @@ const monthNames = [
 export default function DashboardPage({ user, setUser }) {
   const navigate = useNavigate();
   const handleSignOut = () => {
-    // Clear stored user and update app state
     localStorage.removeItem("user");
     setUser(null);
-    // Redirect to login
     navigate("/");
   };
 
