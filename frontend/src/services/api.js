@@ -198,3 +198,13 @@ export const fetchUserReports = async(id) => {
     throw err;
   }
 }
+
+export const updateAccountBalance = async (id, updateData) => {
+  try{
+    const response = await axios.put(`${API_BASE_URL}/Account/${id}`, updateData);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare: ", err);
+    throw err;
+  }
+};

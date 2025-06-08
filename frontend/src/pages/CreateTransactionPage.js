@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createTransaction, fetchUserAccounts, fetchCategories } from "../services/api";
+import { createTransaction, updateAccountBalance, fetchUserAccounts, fetchCategories } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import "../components/CreateTransactionPage.css";
 
@@ -27,15 +27,38 @@ export default function CreateTransactionPage ({user}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+
+    const account = accounts.find((a) => a.id === transactionData.accountId);
+    const amount = parseFloat(transactionData.amount);
+    if (transactionData.type === "expense" && amount > account.balance) {
+      setMessage("Fonduri insuficiente în cont!");
+      return;
+    }
+
     try {
       await createTransaction({
         ...transactionData,
         userId: user.id
       });
-      setMessage("The transaction has been created successfully!");
-      setTimeout(()=>navigate("/transactions"),1000);
+
+      const newBalance =
+        transactionData.type === "income"
+          ? account.balance + amount
+          : account.balance - amount;
+
+      await updateAccountBalance(account.id, { name: account.name, balance: newBalance, currency: account.currency, accountType: account.accountType});
+      setAccounts((prev) =>
+        prev.map((a) =>
+          a.id === account.id ? { ...a, balance: newBalance } : a
+        )
+      );
+
+      setMessage("Tranzacția a fost creată cu succes!");
+      setTimeout(() => navigate("/transactions"), 1000);
     } catch (error) {
-      setMessage("An error occurred while creating the transaction!");
+      console.error(error);
+      setMessage("A apărut o eroare la creare tranzacție!");
     }
   };
 
