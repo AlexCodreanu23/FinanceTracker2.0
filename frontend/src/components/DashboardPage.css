@@ -39,7 +39,7 @@
 .dashboard__charts {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr;               
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));             
 }
 
 .recharts-legend-item-text {
@@ -54,6 +54,7 @@
 
 .dashboard__content-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
@@ -90,5 +91,40 @@
 @media (min-width: 768px) {
   .dashboard__charts {
     grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+.dashboard__export-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 360px;       
+  width: 100%;
+}
+
+.chart-wrapper > .card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper .recharts-wrapper {
+  flex: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media print {
+  .dashboard__export-button {
+    display: none;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
 import { fetchUserAccounts, fetchUserTransactions } from "../services/api";
@@ -14,6 +14,8 @@ import {
   LabelList
 } from "recharts";
 import {Link, useNavigate} from "react-router-dom"; 
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const monthNames = [
   "Jan","Feb","Mar","Apr","May","Jun",
@@ -106,16 +108,76 @@ export default function DashboardPage({ user, setUser }) {
     ([name, value]) => ({name,value})
   );
 
+  const [topCategory, maxCategoryValue] = useMemo(() => {
+    const entries = Object.entries(byCategory);
+    if (entries.length===0) return ["N/A",0];
+    const sorted = entries.sort((a,b)=>b[1]-a[1]);
+    return [sorted[0][0], sorted[0][1]];
+  }, [byCategory]);
+
+  const avg3 = useMemo(() => {
+    const idx = month;
+    const slice = yearlyData.slice(Math.max(0, idx-2), idx+1);
+    if (slice.length===0) return 0;
+    const total = slice.reduce((s,m)=>s+m.expense,0);
+    return total/slice.length;
+  }, [yearlyData, month]);
+
+
+  const dashboardRef = useRef();
+  const pieRef = useRef();
+  const lineRef = useRef();
+  const barRef = useRef();
+  const exportPDF = async () => {
+  const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });
+  pdf.setFontSize(18);
+  pdf.text(`Overview — ${monthNames[month]} ${new Date().getFullYear()}`, 40, 40);
+  pdf.setFontSize(12);
+  pdf.text(`Total Assets: $${accounts
+    .filter(a=>a.accountType==='asset')
+    .reduce((s,a)=>s+a.balance,0)
+    .toLocaleString()}`, 40, 70);
+  pdf.text(`Net Worth:    $${(accounts
+    .filter(a=>a.accountType==='asset').reduce((s,a)=>s+a.balance,0)
+    - accounts.filter(a=>a.accountType==='liability').reduce((s,a)=>s+a.balance,0)
+  ).toLocaleString()}`, 40, 90);
+  pdf.text(`Income:       +$${income.toLocaleString()}`, 40, 110);
+  pdf.text(`Expenses:     -$${expenses.toLocaleString()}`, 40, 130);
+
+  const pieImg  = await html2canvas(pieRef.current,  { scale: 2 }).then(c => c.toDataURL());
+  const lineImg = await html2canvas(lineRef.current, { scale: 2 }).then(c => c.toDataURL());
+  const barImg  = await html2canvas(barRef.current,  { scale: 2 }).then(c => c.toDataURL());
+
+
+  pdf.addImage(pieImg,  "PNG", 60, 210, 300, 210);
+  pdf.addPage();
+  pdf.addImage(lineImg, "PNG", 60,  90, 650, 300);
+  pdf.addPage();
+  pdf.addImage(barImg,  "PNG", 40,  60, 500, 200);
+  const delta = expenses - avg3;
+  pdf.text(
+    delta>0
+      ? `Expenses are $${delta.toLocaleString()} (${((delta/avg3)*100).toFixed(1)}%) above your 3‑month average of $${avg3.toLocaleString()}.`
+      : `Expenses are $${(-delta).toLocaleString()} (${((1-delta/avg3)*100).toFixed(1)}%) below your 3‑month average of $${avg3.toLocaleString()}.`,
+    40,
+    280,
+    { maxWidth: 500 }
+  );
+
+  pdf.save(`dashboard-${monthNames[month]}-${new Date().getFullYear()}.pdf`);
+};
+
 
   return (
     <div className="dashboard">
       <Sidebar selectedMonth={month} onChangeMonth={setMonth} />
 
-      <div className="dashboard__content">
+      <div className="dashboard__content" ref = {dashboardRef}>
         <div className="dashboard__content-header">
           <h2 className="dashboard__month-title">
             {monthNames[month]} Overview
           </h2>
+          <button className="dashboard__export-button" onClick={exportPDF}>Export this month as PDF</button>
           <nav className="dashboard__subnav">
             <Link to="/transactions" className="dashboard__subnav-item">
               My transactions
@@ -154,25 +216,24 @@ export default function DashboardPage({ user, setUser }) {
           </div>
         )}
         <div className="dashboard__charts">
-          <Card title="Spending by Category">
-            <PieChart width={500} height={350}>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                label
-              >
-                {pieData.map((entry, idx) => (
-                  <Cell
-                    key={`cell-${idx}`}
-                    fill={COLORS[idx % COLORS.length]}
-                  />
+          <div className="chart-wrapper" ref={pieRef}>
+            <Card title="Spending by Category">
+              <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  label
+                >
+                  {pieData.map((entry, idx) => (
+                  <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
                 ))}
-              </Pie>
-              <Tooltip />
+                </Pie>
+              <Tooltip/>
               <Legend
                 layout="vertical"
                 align="right"
@@ -180,9 +241,12 @@ export default function DashboardPage({ user, setUser }) {
                 formatter={name => name}
               />
             </PieChart>
+            </ResponsiveContainer>
           </Card>
+          </div>
+          <div className = "chart-wrapper" ref={lineRef}>
           <Card title="Income & Expenses">
-        <ResponsiveContainer width="100%" aspect={2}>
+        <ResponsiveContainer width="100%" height = "100%">
           <LineChart data={yearlyData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
@@ -208,8 +272,10 @@ export default function DashboardPage({ user, setUser }) {
           </LineChart>
         </ResponsiveContainer>
         </Card>
+        </div>
+        <div className = "chart-wrapper" ref={barRef}>
         <Card title = "Income Source">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={incomeBySource}
             margin={{ top: 20, right: 10, left: 0, bottom: 60 }} 
@@ -254,6 +320,7 @@ export default function DashboardPage({ user, setUser }) {
           </BarChart>
         </ResponsiveContainer>
         </Card>
+        </div>
         </div>
       </div>
     </div>
