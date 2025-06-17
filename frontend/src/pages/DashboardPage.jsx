@@ -162,7 +162,10 @@ export default function DashboardPage({ user, setUser }) {
     40,
     280,
     { maxWidth: 500 }
+    
   );
+  pdf.text(`The category you spent the most on this month is ${topCategory}.`, 40, 310, { maxWidth: 500 });
+  pdf.text(`The total amount spent on ${topCategory} is $${maxCategoryValue.toLocaleString()}.`, 40, 330, { maxWidth: 500 });
 
   pdf.save(`dashboard-${monthNames[month]}-${new Date().getFullYear()}.pdf`);
 };
