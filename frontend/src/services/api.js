@@ -95,6 +95,16 @@ export const createBudget = async(budgetData) => {
   }
 }
 
+export const createReport = async(reportData) => {
+  try{
+    const response = await axios.post(`${API_BASE_URL}/Report`, reportData);
+    return response.data;
+  }catch(err){
+    console.error("A aparut o eroare", err);
+    throw err;
+  }
+}
+
 export const deleteAccount = async(accountId) => {
   try{
     const response = await axios.delete(`${API_BASE_URL}/Account/${accountId}`);

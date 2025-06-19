@@ -16,6 +16,7 @@ namespace FinanceTracker_2._0.Services
             _mapper = mapper;
             _reportRepository = reportRepository;
         }
+
         public async Task<IEnumerable<ReportDTO>> GetAllReportsAsync()
         {
             var reports = await _reportRepository.GetAllAsync();

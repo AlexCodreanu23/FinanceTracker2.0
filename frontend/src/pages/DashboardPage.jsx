@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
-import { fetchUserAccounts, fetchUserTransactions } from "../services/api";
+import { fetchUserAccounts, fetchUserTransactions, fetchUserReports, createReport} from "../services/api";
 import "../components/DashboardPage.css";
 import {
   PieChart,
@@ -34,7 +34,9 @@ export default function DashboardPage({ user, setUser }) {
   const [month, setMonth]       = useState(new Date().getMonth());
   const [accounts, setAccounts] = useState([]);
   const [txs, setTxs]           = useState([]);
+  const [reports, setReports]   = useState([]);
   const [loading, setLoading]   = useState(true);
+  const hasGeneratedReport = useRef(false);
 
   useEffect(() => {
     if (!user) return;
@@ -51,6 +53,41 @@ export default function DashboardPage({ user, setUser }) {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+    fetchUserReports(user.id)
+      .then(setReports)
+      .catch(console.error);
+  }, [user]);
+
+  useEffect(() => {
+    const today = new Date();
+    if (!loading && !hasGeneratedReport.current && today.getDate() === 1) {
+      hasGeneratedReport.current = true;
+      const prev = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      const year = prev.getFullYear();
+      const monthIdx = prev.getMonth(); 
+      const monthYear = `${year}-${String(monthIdx + 1).padStart(2, '0')}`;
+
+      const prevExpenses = txs
+        .filter(tx => {
+          const d = new Date(tx.date);
+          return (
+            d.getFullYear() === year &&
+            d.getMonth() === monthIdx &&
+            tx.type === 'expense'
+          );
+        })
+        .reduce((sum, tx) => sum + tx.amount, 0);
+
+      if (!reports.some(r => r.month_year === monthYear)) {
+        createReport({ userId: user.id, month_year: monthYear, amountSpent: prevExpenses })
+          .then(newReport => setReports(prev => [...prev, newReport]))
+          .catch(console.error);
+      }
+    }
+  }, [loading, txs, reports, user]);
 
   const yearlyData = useMemo(() => {
     return monthNames.map((name, monthIdx) => {

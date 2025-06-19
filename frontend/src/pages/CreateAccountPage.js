@@ -53,14 +53,15 @@ export default function CreateAccountPage({user}) {
                         onChange={handleChange}
                         required
                     />
-                    <label>Currency</label>
-                    <input
-                    type = "text"
-                    name = "currency"
-                    value = {accountData.currency}
-                    onChange = {handleChange}
-                    required 
-                    />
+                    <label>Currency:</label>
+                    <select
+                    name="currency"
+                    value={accountData.currency}
+                    onChange={handleChange}
+                    required
+                    >
+                    <option value="USD">US Dollar (USD)</option>
+                    </select>
                     <label>Account Type:</label>
                     <select
                         name="accountType"
