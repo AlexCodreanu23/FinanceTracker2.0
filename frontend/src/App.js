@@ -4,15 +4,14 @@ import CategoriesPage from "./pages/CategoriesPage";
 import CreateTransactionPage from "./pages/CreateTransactionPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import CreateBudgetPage from "./pages/CreateBudgetPage";
-import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
-import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import UserTransactionsPage from "./pages/UserTransactionsPage";
 import UserAccountsPage from "./pages/UserAccountsPage";
 import UserBudgetsPage from "./pages/UserBudgetsPage";
 import UserReportsPage from "./pages/UserReportsPage"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from "./pages/LandingPage";
 import './App.css';
 
 function App() {
@@ -28,24 +27,14 @@ function App() {
   }, []);
 
   if (!user) {
-    return showRegister? (
-      <>
-        <RegisterPage setUserData={setUser}/>
-        <p style = {{textAlign: "center"}}>
-            Already have an account?{""}
-            <button onClick={()=> setShowRegister(false)}>Login</button>
-        </p>
-      </>
-    ) : (
-        <>
-        <LoginPage setUserData = {setUser}/>
-        <p style = {{textAllign: "center"}}>
-          Don't have an account?{""}
-          <button onClick= {()=> setShowRegister(true)}>Register</button>
-        </p>
-      </>
+    return (
+      <LandingPage
+        showRegister={showRegister}
+        setShowRegister={setShowRegister}
+        setUserData={setUser}
+      />
     );
-  } 
+  }
   return (
     <BrowserRouter>
       <Header user={user} />
