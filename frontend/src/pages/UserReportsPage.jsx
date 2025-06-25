@@ -34,39 +34,47 @@ export default function UserReportsPage({ user }) {
     return d.toLocaleString("default", { month: "long", year: "numeric" });
   };
 
+
+  if (loading) {
+    return <div className="loading">Loading…</div>;
+  }
+
+  if (reports.length === 0) {
+    return (
+      <div className="empty">
+        No reports found.
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
   return (
     <div className="user-reports-page">
       <div className="inner">
         <h1 className="title">My Reports</h1>
-
-        {loading && <div className="loading">Loading…</div>}
-        {error   && <div className="error">Error: {error}</div>}
-        {!loading && !error && reports.length === 0 && (
-          <div className="empty">No reports found.</div>
-        )}
-
-        {!loading && !error && reports.length > 0 && (
-          <table className="table">
-            <thead className="thead">
-              <tr>
-                <th className="amount-spent">Amount Spent</th>
-                <th className="month-year">Month/Year</th>
+        <table className="table">
+          <thead className="thead">
+            <tr>
+              <th className="amount-spent">Amount Spent</th>
+              <th className="month-year">Month/Year</th>
+            </tr>
+          </thead>
+          <tbody className="tbody">
+            {reports.map(rp => (
+              <tr key={rp.id}>
+                <td className="amount-spent">
+                  ${rp.amountSpent?.toFixed(2)}
+                </td>
+                <td className="month-year">
+                  {formatMonthYear(rp.month_year || rp.monthYear)}
+                </td>
               </tr>
-            </thead>
-            <tbody className="tbody">
-              {reports.map(rp => (
-                <tr key={rp.id}>
-                  <td className="amount-spent">
-                    ${rp.amountSpent?.toFixed(2)}
-                  </td>
-                  <td className="month-year">
-                    {formatMonthYear(rp.month_year || rp.monthYear)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

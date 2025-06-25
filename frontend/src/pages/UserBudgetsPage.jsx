@@ -29,6 +29,23 @@ export default function UserBudgetsPage({ user }) {
     return isNaN(d) ? "Invalid Date" : d.toLocaleDateString();
   };
 
+
+  if (loading) {
+    return <div className="loading">Loading…</div>;
+  }
+
+  if (budgets.length === 0) {
+    return (
+      <div className="empty">
+        No budgets found.
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+  
   return (
     <div className="user-budgets-page">
       <div className="inner">
@@ -36,42 +53,33 @@ export default function UserBudgetsPage({ user }) {
         <Link to="/CreateBudget" className = "btn-add-budget">
           Add a budget
         </Link>
+        <table className="table">
+          <thead className="thead">
+            <tr>
+              <th>Name</th>
+              <th className="amount">Amount</th>
+              <th className="start-date">Start Date</th>
+              <th className="end-date">End Date</th>
+            </tr>
+          </thead>
+          <tbody className="tbody">
+            {budgets.map(bd => {
+              const name      = bd.budgetName;
+              const amt       = bd.amount;
+              const startRaw  = bd.start_date;
+              const endRaw    = bd.end_date;
 
-        {loading && <div className="loading">Loading…</div>}
-        {error   && <div className="error">Error: {error}</div>}
-        {!loading && !error && budgets.length === 0 && (
-          <div className="empty">No budgets found.</div>
-        )}
-
-        {!loading && !error && budgets.length > 0 && (
-          <table className="table">
-            <thead className="thead">
-              <tr>
-                <th>Name</th>
-                <th className="amount">Amount</th>
-                <th className="start-date">Start Date</th>
-                <th className="end-date">End Date</th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {budgets.map(bd => {
-                const name      = bd.budgetName;
-                const amt       = bd.amount;
-                const startRaw  = bd.start_date;
-                const endRaw    = bd.end_date;
-
-                return (
-                  <tr key={bd.id}>
-                    <td>{name}</td>
-                    <td className="amount">${amt?.toFixed(2)}</td>
-                    <td className="start-date">{formatDate(startRaw)}</td>
-                    <td className="end-date">{formatDate(endRaw)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+              return (
+                <tr key={bd.id}>
+                  <td>{name}</td>
+                  <td className="amount">${amt?.toFixed(2)}</td>
+                  <td className="start-date">{formatDate(startRaw)}</td>
+                  <td className="end-date">{formatDate(endRaw)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

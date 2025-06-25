@@ -17,6 +17,22 @@ export default function UserAccountsPage({ user }) {
       .finally(() => setLoading(false));
   }, [user]);
 
+  if (loading) {
+    return <div className="loading">Loading…</div>;
+  }
+
+  if (accounts.length === 0) {
+    return (
+      <div className="empty">
+        No accounts found.
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
   return (
     <div className="user-accounts-page">
       <div className="inner">
@@ -24,37 +40,28 @@ export default function UserAccountsPage({ user }) {
         <Link to="/CreateAccount" className="btn-add-account">
           Add a new account
         </Link>
-
-        {loading && <div className="tbody"><em>Loading…</em></div>}
-        {error && <div className="tbody"><span style={{ color: "red" }}>Error: {error}</span></div>}
-        {!loading && !error && accounts.length === 0 && (
-          <div className="tbody">No accounts found.</div>
-        )}
-
-        {!loading && !error && accounts.length > 0 && (
-          <table className="table">
-            <thead className="thead">
-              <tr>
-                <th>Name</th>
-                <th className="type">Type</th>
-                <th className="balance">Balance</th>
-                <th className="currency">Currency</th>
+        <table className="table">
+          <thead className="thead">
+            <tr>
+              <th>Name</th>
+              <th className="type">Type</th>
+              <th className="balance">Balance</th>
+              <th className="currency">Currency</th>
+            </tr>
+          </thead>
+          <tbody className="tbody">
+            {accounts.map(acc => (
+              <tr key={acc.id}>
+                <td>{acc.name}</td>
+                <td className={`type ${acc.accountType}`}>
+                  {acc.accountType}
+                </td>
+                <td className="balance">{acc.balance.toFixed(2)}</td>
+                <td className="currency">{acc.currency}</td>
               </tr>
-            </thead>
-            <tbody className="tbody">
-              {accounts.map(acc => (
-                <tr key={acc.id}>
-                  <td>{acc.name}</td>
-                  <td className={`type ${acc.accountType}`}>
-                    {acc.accountType}
-                  </td>
-                  <td className="balance">{acc.balance.toFixed(2)}</td>
-                  <td className="currency">{acc.currency}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
