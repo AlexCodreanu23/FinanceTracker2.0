@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchUserBudgets, fetchCategories } from "../services/api";
+import { motion } from "framer-motion";
+import { fetchUserBudgets, fetchCategories, deleteBudget } from "../services/api";
 import { Link } from "react-router-dom";
-import {motion} from "framer-motion";
 import "../components/UserBudgetsPage.css";
 
 export default function UserBudgetsPage({ user }) {
@@ -9,6 +9,7 @@ export default function UserBudgetsPage({ user }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [confirmId, setConfirmId] = useState(null);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -42,6 +43,17 @@ export default function UserBudgetsPage({ user }) {
     loadBudgets();
   }, [user]);
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteBudget(id);
+      setBudgets(prev => prev.filter(b => b.id !== id));
+      setConfirmId(null);
+    } catch (err) {
+      console.error("Error deleting budget:", err);
+      setError("Could not delete budget. Please try again.");
+    }
+  };
+
   const formatDate = (str) => {
     if (!str) return "—";
     const d = new Date(str);
@@ -73,6 +85,7 @@ export default function UserBudgetsPage({ user }) {
               <th className="amount">Amount</th>
               <th className="start-date">Start Date</th>
               <th className="end-date">End Date</th>
+              <th className="actions">Actions</th>
             </tr>
           </thead>
           <tbody className="tbody">
@@ -88,6 +101,32 @@ export default function UserBudgetsPage({ user }) {
                 <td className="amount">${bd.amount?.toFixed(2)}</td>
                 <td className="start-date">{formatDate(bd.start_date)}</td>
                 <td className="end-date">{formatDate(bd.end_date)}</td>
+                <td className="actions">
+                  {confirmId === bd.id ? (
+                    <div className="confirm-inline">
+                      <span>Are you sure? </span>
+                      <button
+                        onClick={() => handleDelete(bd.id)}
+                        className="btn-confirm"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => setConfirmId(null)}
+                        className="btn-cancel"
+                      >
+                        No
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setConfirmId(bd.id)}
+                      className="btn-delete"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </td>
               </motion.tr>
             ))}
           </tbody>

@@ -111,3 +111,62 @@
   background-color: #1c5ec0;
 }
   
+.user-budgets-page .actions button {
+  background-color: var(--error);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.user-budgets-page .actions button:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.user-budgets-page .actions button:active {
+  transform: translateY(0);
+}
+
+
+.user-budgets-page .confirm-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: var(--radius);
+}
+
+.user-budgets-page .confirm-inline .btn-confirm {
+  background-color: var(--success);
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.user-budgets-page .confirm-inline .btn-confirm:hover {
+  background-color: #43a047; 
+  transform: translateY(-1px);
+}
+
+.user-budgets-page .confirm-inline .btn-cancel {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.user-budgets-page .confirm-inline .btn-cancel:hover {
+  background-color: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
