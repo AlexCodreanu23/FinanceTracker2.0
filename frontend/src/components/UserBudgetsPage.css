@@ -97,4 +97,17 @@
     font-style: italic;
     color: var(--text-secondary);
   }
+
+.user-budgets-page .btn-add-budget {
+  background-color: #2979ff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.user-budget-page .btn-add-budget:hover {
+  background-color: #1c5ec0;
+}
   

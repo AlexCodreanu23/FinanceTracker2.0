@@ -7,7 +7,7 @@ export default function CreateAccountPage({user}) {
     const [accountData, setAccountData] = useState({
         name: "",
         balance: "",
-        currency: "",
+        currency: "USD",
         accountType: ""
     });
 
