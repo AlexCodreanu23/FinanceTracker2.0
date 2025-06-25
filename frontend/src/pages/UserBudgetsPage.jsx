@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserBudgets, fetchCategories } from "../services/api";
 import { Link } from "react-router-dom";
+import {motion} from "framer-motion";
 import "../components/UserBudgetsPage.css";
 
 export default function UserBudgetsPage({ user }) {
@@ -75,14 +76,19 @@ export default function UserBudgetsPage({ user }) {
             </tr>
           </thead>
           <tbody className="tbody">
-            {budgets.map((bd) => (
-              <tr key={bd.id}>
+            {budgets.map((bd, index) => (
+              <motion.tr
+                key={bd.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
                 <td>{bd.budgetName}</td>
                 <td>{getCategoryName(bd.categoryId)}</td>
                 <td className="amount">${bd.amount?.toFixed(2)}</td>
                 <td className="start-date">{formatDate(bd.start_date)}</td>
                 <td className="end-date">{formatDate(bd.end_date)}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>

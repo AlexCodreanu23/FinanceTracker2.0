@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserAccounts } from "../services/api";
 import { Link } from "react-router-dom";
+import {motion} from "framer-motion";
 import "../components/UserAccountsPage.css";
 
 export default function UserAccountsPage({ user }) {
@@ -50,15 +51,20 @@ export default function UserAccountsPage({ user }) {
             </tr>
           </thead>
           <tbody className="tbody">
-            {accounts.map(acc => (
-              <tr key={acc.id}>
+            {accounts.map((acc, idx) => (
+              <motion.tr
+                key={acc.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.04 }}
+              >
                 <td>{acc.name}</td>
                 <td className={`type ${acc.accountType}`}>
                   {acc.accountType}
                 </td>
                 <td className="balance">{acc.balance.toFixed(2)}</td>
                 <td className="currency">{acc.currency}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>

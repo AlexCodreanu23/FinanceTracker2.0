@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserTransactions } from "../services/api";
 import {Link} from "react-router-dom"
+import {motion} from "framer-motion"
 import "../components/UserTransactionsPage.css";
 
 export default function UserTransactionsPage({ user }) {
@@ -59,24 +60,30 @@ export default function UserTransactionsPage({ user }) {
               </tr>
             </thead>
             <tbody className="tbody">
-              {txs.map(tx => (
-                <tr key={tx.id}>
-                  <td className={`type ${tx.type}`}>
-                    {tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}
-                  </td>
-                  <td className="category-name">
-                    {tx.categoryName}
-                  </td>
-                  <td className="cell-date">
-                    {new Date(tx.date).toLocaleDateString()}
-                  </td>
-                  <td className={`cell-amount ${
-                      tx.type === "income" ? "positive" : "negative"
-                    }`}>
-                    {tx.type === "income" ? "+" : "−"}${Math.abs(tx.amount).toFixed(2)}
-                  </td>
-                </tr>
-              ))}
+            {txs.map((tx, index) => (
+              <motion.tr
+                key={tx.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.04 }}
+              >
+                <td className={`type ${tx.type}`}>
+                  {tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}
+                </td>
+                <td className="category-name">{tx.categoryName}</td>
+                <td className="cell-date">
+                  {new Date(tx.date).toLocaleDateString()}
+                </td>
+                <td
+                  className={`cell-amount ${
+                    tx.type === "income" ? "positive" : "negative"
+                  }`}
+                >
+                  {tx.type === "income" ? "+" : "−"}$
+                  {Math.abs(tx.amount).toFixed(2)}
+                </td>
+              </motion.tr>
+            ))}
             </tbody>
           </table>
         </div>

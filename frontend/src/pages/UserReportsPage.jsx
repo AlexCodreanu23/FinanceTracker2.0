@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserReports } from "../services/api";
+import {motion} from "framer-motion"
 import "../components/UserReportsPage.css";
 
 export default function UserReportsPage({ user }) {
@@ -62,18 +63,23 @@ export default function UserReportsPage({ user }) {
               <th className="month-year">Month/Year</th>
             </tr>
           </thead>
-          <tbody className="tbody">
-            {reports.map(rp => (
-              <tr key={rp.id}>
+            <tbody className="tbody">
+              {reports.map((rp, idx) => (
+              <motion.tr
+                key={rp.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.04 }}
+              >
                 <td className="amount-spent">
                   ${rp.amountSpent?.toFixed(2)}
                 </td>
                 <td className="month-year">
                   {formatMonthYear(rp.month_year || rp.monthYear)}
                 </td>
-              </tr>
-            ))}
-          </tbody>
+              </motion.tr>
+              ))}
+            </tbody>
         </table>
       </div>
     </div>
