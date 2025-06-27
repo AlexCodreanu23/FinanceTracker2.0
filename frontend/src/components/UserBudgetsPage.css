@@ -198,3 +198,11 @@
 .row-danger  { 
   background-color: rgba(244,67,54,0.2); 
 }
+
+
+.user-budgets-page .tbody td.amount,
+.user-budgets-page .tbody td.remaining,
+.user-budgets-page .tbody td.start-date,
+.user-budgets-page .tbody td.end-date {
+  text-align: left !important;
+}
