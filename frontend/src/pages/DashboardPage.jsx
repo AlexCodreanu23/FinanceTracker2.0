@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
-import { fetchUserAccounts, fetchUserTransactions, fetchUserReports, createReport} from "../services/api";
+import { fetchUserAccounts, fetchUserTransactions, fetchUserReports, createReport, fetchUserBudgets, fetchCategories} from "../services/api";
 import "../components/DashboardPage.css";
 import {
   PieChart,
@@ -16,6 +16,7 @@ import {
 import {Link, useNavigate} from "react-router-dom"; 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"
 
 const monthNames = [
   "Jan","Feb","Mar","Apr","May","Jun",
@@ -36,6 +37,8 @@ export default function DashboardPage({ user, setUser }) {
   const [txs, setTxs]           = useState([]);
   const [reports, setReports]   = useState([]);
   const [loading, setLoading]   = useState(true);
+  const [budgets, setBudgets] = useState([]);
+  const [categories, setCategories] = useState([]);
   const hasGeneratedReport = useRef(false);
 
   useEffect(() => {
@@ -59,6 +62,19 @@ export default function DashboardPage({ user, setUser }) {
     fetchUserReports(user.id)
       .then(setReports)
       .catch(console.error);
+  }, [user]);
+
+  useEffect(() => {
+  if (!user) return;
+  Promise.all([
+    fetchUserBudgets(user.id),
+    fetchCategories()
+  ])
+    .then(([budgetsData, cats]) => {
+      setBudgets(budgetsData);
+      setCategories(cats);
+    })
+    .catch(console.error);
   }, [user]);
 
   useEffect(() => {
@@ -161,12 +177,46 @@ export default function DashboardPage({ user, setUser }) {
   }, [yearlyData, month]);
 
 
+  const allCategoryId = categories.find(c => c.name === 'All')?.id;
+
+  const budgetsWithStats = budgets.map((bd) => {
+    const spent = txs
+      .filter(tx => {
+        const txDate   = new Date(tx.date);
+        const start    = new Date(bd.start_date);
+        const end      = new Date(bd.end_date);
+        const inPeriod = txDate >= start && txDate <= end;
+        if (bd.categoryId === allCategoryId) {
+          return inPeriod;
+        }
+        return inPeriod && tx.categoryId === bd.categoryId;
+      })
+      .reduce((sum, tx) => sum + tx.amount, 0);
+
+    const remaining = bd.amount - spent;
+    return { ...bd, spent, remaining };
+  });
+
+  const today       = new Date();
+  const currentMonth= today.getMonth();
+  const currentYear = today.getFullYear();
+
+  const printableBudgets = budgetsWithStats.filter(b => {
+    const end = new Date(b.end_date);
+    return (
+      end.getFullYear() === currentYear &&
+      end.getMonth()    === currentMonth &&
+      end < today
+    );
+  });
+
+
   const dashboardRef = useRef();
   const pieRef = useRef();
   const lineRef = useRef();
   const barRef = useRef();
   const exportPDF = async () => {
-  const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });
+  const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' });     
   pdf.setFontSize(18);
   pdf.text(`Overview — ${monthNames[month]} ${new Date().getFullYear()}`, 40, 40);
   pdf.setFontSize(12);
@@ -203,6 +253,29 @@ export default function DashboardPage({ user, setUser }) {
   );
   pdf.text(`The category you spent the most on this month is ${topCategory}.`, 40, 310, { maxWidth: 500 });
   pdf.text(`The total amount spent on ${topCategory} is $${maxCategoryValue.toLocaleString()}.`, 40, 330, { maxWidth: 500 });
+
+
+  pdf.addPage();
+  pdf.setFontSize(16);
+  pdf.text("Budgets Report", 40, 40);
+
+  autoTable(pdf, {
+    startY: 60,
+    head: [[
+      "Name", "Category", "Amount", "Spent", "Remaining", "Start Date", "End Date"
+    ]],
+    body: printableBudgets.map(b => [
+      b.budgetName,
+      (categories.find(c => c.id === b.categoryId)?.name) || "—",
+      `$${b.amount.toFixed(2)}`,
+      `$${b.spent.toFixed(2)}`,
+      `$${b.remaining.toFixed(2)}`,
+      new Date(b.start_date).toLocaleDateString(),
+      new Date(b.end_date).toLocaleDateString()
+    ]),
+    styles: { fontSize: 10, cellPadding: 4 },
+    headStyles: { fillColor: [41, 121, 255], textColor: 255 }
+  });
 
   pdf.save(`dashboard-${monthNames[month]}-${new Date().getFullYear()}.pdf`);
 };

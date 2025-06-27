@@ -79,12 +79,24 @@ export default function UserBudgetsPage({ user }) {
     return cat ? cat.name : "—";
   };
 
+  const allCategoryId = categories.find(c => c.name === 'All')?.id;
+
   const budgetsWithStats = budgets.map((bd) => {
-    const spent = transactions.filter((tx) => tx.categoryId === bd.categoryId &&
-      new Date(tx.date) >= new Date (bd.start_date) && new Date(tx.date) <= new Date(bd.end_date)
-    ).reduce((sum,tx) => sum + tx.amount, 0);
+    const spent = transactions
+      .filter(tx => {
+        const txDate   = new Date(tx.date);
+        const start    = new Date(bd.start_date);
+        const end      = new Date(bd.end_date);
+        const inPeriod = txDate >= start && txDate <= end;
+        if (bd.categoryId === allCategoryId) {
+          return inPeriod;
+        }
+        return inPeriod && tx.categoryId === bd.categoryId;
+      })
+      .reduce((sum, tx) => sum + tx.amount, 0);
+
     const remaining = bd.amount - spent;
-    return {...bd, spent, remaining};
+    return { ...bd, spent, remaining };
   });
 
   if (loading) return <div className="loading">Loading…</div>;
