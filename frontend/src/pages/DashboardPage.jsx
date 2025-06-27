@@ -335,7 +335,13 @@ export default function DashboardPage({ user, setUser }) {
             <YAxis
               tickFormatter={val => `$${val}`}
               stroke="var(--text)"
-              tick={{ fill: 'var(--text)' }}
+              width={70}           
+              tickMargin={10}       
+              tick={{
+                fill: 'var(--text)',
+                fontSize: 15,
+                dx: 5        
+              }}
             />
             <Tooltip
             cursor = {false}
