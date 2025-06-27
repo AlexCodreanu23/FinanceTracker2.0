@@ -170,3 +170,31 @@
   background-color: rgba(255,255,255,0.12);
   transform: translateY(-1px);
 }
+
+.user-budgets-page .remaining { 
+  text-align: right; 
+  font-weight: 600; 
+  color: var(--text-secondary); 
+}
+.user-budgets-page .remaining.negative { 
+  color: var(--error); 
+}
+.user-budgets-page .progress-bar { 
+  height: 4px; 
+  background: var(--border-color); 
+  border-radius: 2px; 
+  margin-top: 4px; 
+  overflow: hidden; 
+}
+.user-budgets-page .progress-bar .fill { 
+  height: 100%; 
+  background: var(--accent); 
+  transition: width var(--transition); 
+}
+
+.row-warning { 
+  background-color: rgba(255,193,7,0.2); 
+}
+.row-danger  { 
+  background-color: rgba(244,67,54,0.2); 
+}
