@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { createTransaction, updateAccountBalance, fetchUserAccounts, fetchCategories } from "../services/api";
+import { createTransaction, updateAccountBalance, fetchUserAccounts, fetchCategories, fetchUserBudgets } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import {toast } from 'react-toastify';
 import "../components/CreateTransactionPage.css";
 
 export default function CreateTransactionPage ({user}) {
@@ -13,11 +14,13 @@ export default function CreateTransactionPage ({user}) {
   const [accounts, setAccounts] = useState([]);
   const [categories, setCategories] = useState([])
   const [message, setMessage] = useState("");
+  const [budgets, setBudgets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserAccounts(user.id).then(setAccounts);
-    fetchCategories(user.id).then(setCategories);
+    fetchUserAccounts(user.id).then(setAccounts).catch(console.error);
+    fetchCategories(user.id).then(setCategories).catch(console.error);
+    fetchUserBudgets(user.id).then(setBudgets).catch(console.error);
   }, [user.id]);
 
   const handleChange = (e) => {
@@ -37,7 +40,7 @@ export default function CreateTransactionPage ({user}) {
     }
 
     try {
-      await createTransaction({
+      const newTx = await createTransaction({
         ...transactionData,
         userId: user.id
       });
@@ -54,11 +57,51 @@ export default function CreateTransactionPage ({user}) {
         )
       );
 
-      setMessage("Tranzacția a fost creată cu succes!");
+      if (transactionData.type === "expense") {
+        const txDate = new Date(newTx.date);
+        const allCat = categories.find((c) =>
+          c.name.toLowerCase() === "all"
+        );
+        const allCatId = allCat?.id;
+
+        const active = budgets
+          .filter((bd) => {
+            const start = new Date(bd.start_date);
+            const end   = new Date(bd.end_date);
+            const inPeriod = txDate >= start && txDate <= end;
+            if (bd.categoryId === allCatId) return inPeriod;
+            return inPeriod && bd.categoryId === newTx.categoryId;
+          })
+          .sort(
+            (a, b) => new Date(b.start_date) - new Date(a.start_date)
+          );
+
+        if (active.length > 0) {
+          const b = active[0];
+          toast.info(
+            `You spent $${amount.toFixed(2)} from your "${b.budgetName}" budget`,
+            { autoClose: 6000 }
+          );
+        } else {
+          toast.info(
+            "This expense did not match any active budget.",
+            { autoClose: 6000 }
+          );
+        }
+
+      setMessage("The transaction has been succesfully created!");
       setTimeout(() => navigate("/transactions"), 1000);
-    } catch (error) {
+      }else {
+        toast.success(
+          `You received $${amount.toFixed(2)} into your "${account.name}" account`,
+          { autoClose: 4000 }
+        );
+      }
+      setMessage("The transaction has been successfully created!");
+      setTimeout(() => navigate("/transactions"), 1000);
+    }catch (error) {
       console.error(error);
-      setMessage("A apărut o eroare la creare tranzacție!");
+      setMessage("An error occured!");
     }
   };
 

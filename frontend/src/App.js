@@ -12,6 +12,7 @@ import UserBudgetsPage from "./pages/UserBudgetsPage";
 import UserReportsPage from "./pages/UserReportsPage"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/LandingPage";
+import { ToastContainer } from "react-toastify";
 import './App.css';
 
 function App() {
@@ -38,6 +39,14 @@ function App() {
   return (
     <BrowserRouter>
       <Header user={user} />
+       <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      pauseOnHover
+      />
       <Routes>
       <Route path = "/" element = {<DashboardPage user = {user} setUser={setUser}/>}/>
         <Route path = "/dashboard" element = {<DashboardPage user = {user} setUser={setUser}/>}/>
