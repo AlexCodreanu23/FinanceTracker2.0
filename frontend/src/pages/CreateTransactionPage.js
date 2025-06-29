@@ -35,7 +35,7 @@ export default function CreateTransactionPage ({user}) {
     const account = accounts.find((a) => a.id === transactionData.accountId);
     const amount = parseFloat(transactionData.amount);
     if (transactionData.type === "expense" && amount > account.balance) {
-      setMessage("Fonduri insuficiente în cont!");
+      setMessage("Insufficient funds in this account!");
       return;
     }
 
