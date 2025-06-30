@@ -362,7 +362,10 @@ export default function DashboardPage({ user, setUser }) {
         <ResponsiveContainer width="100%" height = "100%">
           <LineChart data={yearlyData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
+            <XAxis
+              dataKey="month"
+              interval={0}                 
+            />
             <YAxis />
             <Tooltip formatter={val => `$${val.toLocaleString()}`} />
             <Legend verticalAlign="top" />
