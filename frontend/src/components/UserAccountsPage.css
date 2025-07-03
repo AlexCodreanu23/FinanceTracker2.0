@@ -509,7 +509,7 @@
 }
 
 .btn-view,
-.btn-edit {
+.btn-delete {
   flex: 1;
   display: flex;
   align-items: center;
@@ -532,7 +532,7 @@
   color: white;
 }
 
-.btn-edit:hover {
+.btn-delete:hover {
   background: var(--warning-orange);
   border-color: var(--warning-orange);
   color: white;
@@ -672,7 +672,7 @@
 .btn-add-account:focus,
 .filter-btn:focus,
 .btn-view:focus,
-.btn-edit:focus {
+.btn-delete:focus {
   outline: 2px solid var(--primary-blue);
   outline-offset: 2px;
 }

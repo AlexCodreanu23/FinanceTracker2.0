@@ -47,20 +47,23 @@ export default function UserBudgetsPage({ user }) {
   }, [user])
 
   useEffect(() => {
-    if (!user) return
+  if (!user) return
     const loadBudgets = async () => {
       setLoading(true)
       setError(null)
       try {
         const data = await fetchUserBudgets(user.id)
-        const sorted = Array.isArray(data)
-          ? [...data].sort(
-              (a, b) => new Date(b.start_date) - new Date(a.start_date)
-            )
-          : []
+        const arr = Array.isArray(data) ? data : []
+        const sorted = [...arr].sort(
+          (a, b) => new Date(b.start_date) - new Date(a.start_date)
+        )
         setBudgets(sorted)
       } catch (err) {
-        setError(err.message || "Error loading budgets.")
+        if (err.response?.status === 404) {
+          setBudgets([])
+        } else {
+          setError(err.message || "Error loading budgets.")
+        }
       } finally {
         setLoading(false)
       }
@@ -154,6 +157,7 @@ export default function UserBudgetsPage({ user }) {
     )
   }
 
+  /*
   if (error) {
     return (
       <div className="user-budgets-page">
@@ -164,7 +168,7 @@ export default function UserBudgetsPage({ user }) {
       </div>
     )
   }
-
+  */
   return (
     <div className="user-budgets-page">
       <div className="container">
