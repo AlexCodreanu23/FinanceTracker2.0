@@ -1,5 +1,4 @@
 name: .NET CI
-
 on:
   workflow_dispatch:
   push:
