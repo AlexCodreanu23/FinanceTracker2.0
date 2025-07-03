@@ -131,11 +131,14 @@ export default function CreateTransactionPage ({user}) {
             required
           >
             <option value="" disabled>— Select account —</option>
-            {accounts.map(a => (
-              <option key={a.id} value={a.id}>
-                {a.name} ({a.balance})
-              </option>
-            ))}
+            {accounts
+              .filter(a => a.accountType === 'asset')  
+              .map(a => (
+                <option key={a.id} value={a.id}>
+                  {a.name} ({a.balance})
+                </option>
+              ))
+            }
           </select>
         </label>
 
