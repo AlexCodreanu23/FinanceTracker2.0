@@ -204,12 +204,12 @@ export default function UserAccountsPage({ user }) {
                     <div className="liability-progress">
                       <div className="progress-info">
                         <span className="progress-label">Debt Level</span>
-                        <span className="progress-value">{((account.balance / (account.balance + 10000)) * 100).toFixed(1)}%</span>
+                        <span className="progress-value">{(Math.abs(account.balance) / totalLiabilities * 100).toFixed(1)}%</span>
                       </div>
                       <div className="progress-bar">
                         <div
                           className="progress-fill"
-                          style={{ width: `${Math.min(100, (account.balance / (account.balance + 10000)) * 100)}%` }}
+                          style={{ width: `${Math.min(100, (Math.abs(account.balance) / totalLiabilities * 100))}%` }}
                         ></div>
                       </div>
                     </div>
